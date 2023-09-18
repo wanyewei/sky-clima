@@ -8,13 +8,17 @@ export const theme = {
   },
   typography: {
     // font-size
+    phoneHeading: "1rem",
     heading: "1.25rem",
     title1: "0.75rem",
+
     // font-weight
     weightTitle: 700,
     weightRegular: 600,
+
     // font-family
     fontFamily: "Nunito",
+
     // font-styled
     fontStyled: "normal",
   },

@@ -1,14 +1,12 @@
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { theme } from "./props/Theme";
-import { Header } from "./components/layout/Header";
+import DefaultLout from "./components/layout/DefaultLout";
 
 const Homepage = () => {
   return (
     <ThemeProvider theme={theme}>
-      <div>
-        <Header />
-      </div>
+      <DefaultLout>123456789888888888888888</DefaultLout>
     </ThemeProvider>
   );
 };

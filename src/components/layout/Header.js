@@ -5,9 +5,12 @@ import Search from "../header/Search";
 import CurrentLocation from "../header/CurrentLocation";
 
 const StyledHeader = styled.header`
+  position: sticky;
+  top: 0;
   display: flex;
   width: 100%;
   height: 3.7rem;
+  z-index: 1;
   background-color: ${(props) => props.theme.color.backgroundColor};
 `;
 
@@ -28,11 +31,14 @@ const StyledLogol = styled.div`
     margin-right: 0.5rem;
     margin-left: 1rem;
   }
+
+  @media (max-width: 995px) {
+  }
 `;
 
-export const Header = () => {
+export const Header = ({ fixHeader }) => {
   return (
-    <StyledHeader>
+    <StyledHeader fixed={fixHeader}>
       <StyledLogol>
         <LogoIcon />
         <p>SkyClima</p>
