@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ReactComponent as LogoIcon } from "../../images/logol.svg";
+import { ReactComponent as SearchLogoIcon } from "../../images/searchlocation.svg";
 import Search from "../header/Search";
 import CurrentLocation from "../header/CurrentLocation";
 
@@ -40,7 +40,7 @@ export const Header = ({ fixHeader }) => {
   return (
     <StyledHeader fixed={fixHeader}>
       <StyledLogol>
-        <LogoIcon />
+        <SearchLogoIcon />
         <p>SkyClima</p>
       </StyledLogol>
       <Search />
