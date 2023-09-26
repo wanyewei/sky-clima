@@ -4,15 +4,24 @@ import { ReactComponent as SunIcon } from "../../images/sun.svg";
 import { ReactComponent as WindDirectionIcon } from "../../images/wind direction.svg";
 
 const StyledTodayAt = styled.div`
-  width: 35.25rem;
-  display: inline-flex;
+  flex: 0 0 100%;
+  width: 95%;
+  /* height: 100%; */
+  display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: nowrap;
+
+  @media (max-width: 996px) {
+    margin-bottom: 5rem;
+    flex: 0 0 100%;
+    width: 90%;
+  }
 `;
 
 const StyledTitle = styled.div`
+  flex: 0 0 100%;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
   margin-left: 1rem;
@@ -21,68 +30,122 @@ const StyledTitle = styled.div`
 `;
 
 const Styledslider = styled.div`
+  flex: 0 0 100%;
   width: 100%;
+  /* height: 100%; */
   display: flex;
   flex-wrap: nowrap;
-  gap: 0.75rem;
+  gap: 2%;
   padding-bottom: 1rem;
   overflow-x: scroll;
+  overflow-y: auto;
   scroll-padding: 30px;
   scroll-snap-type: x mandatory;
   white-space: nowrap;
 
+  @media (max-width: 996px) {
+    flex: 0 0 50%;
+    overflow-x: scroll;
+    overflow-y: auto;
+    scroll-padding: 30px;
+    scroll-snap-type: x mandatory;
+    white-space: nowrap;
+  }
+
   /* 自定义滚动条轨道样式 */
   &::-webkit-scrollbar {
-    background-color: #14ebce;
+    background-color: #202021;
+    border-radius: 10px;
     /* 在这里定义滚动条轨道的样式 */
   }
 
   /* 自定义滚动条滑块样式 */
   &::-webkit-scrollbar-thumb {
-    width: 32px;
-    background-color: #3498db;
+    border-radius: 10px;
+    background-color: #fff;
     /* 在这里定义滚动条滑块的样式 */
   }
 `;
 
 const StyledSlide = styled.div`
-  flex: 0 0 5.06rem;
+  flex: 0 0 10%;
   scroll-snap-align: start;
   font-size: 24px;
   text-align: center;
+  @media (max-width: 996px) {
+    flex: 0 0 10%;
+    scroll-snap-align: start;
+    font-size: 24px;
+    text-align: center;
+  }
 `;
 
 const StyledFooter = styled.div`
-  width: 5.06rem;
+  /* flex: 0 0 100%; */
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 0.75rem 0;
+  @media (max-width: 996px) {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem 0;
+  }
 `;
 
 const StyledCard = styled.div`
-  width: 5.06rem;
-  height: 6.75rem;
+  /* flex: 0 0 80%; */
+  width: 100%;
+  /* height: 6.75rem; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 1rem;
+  padding: 1rem 0 1rem 0;
   background-color: ${(props) => props.theme.color.backgroundSurface};
   svg {
-    width: 2rem;
-    height: 2rem;
+    width: 40%;
+    height: 40%;
+    /* height: 40%; */
     margin: 0.69rem 0;
+  }
+
+  @media (max-width: 996px) {
+    width: 5.0625rem;
+    flex: 0 0 6.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1rem;
+    /* padding: 0.5rem 1.5rem 0.5rem 1.5rem;s */
+    background-color: ${(props) => props.theme.color.backgroundSurface};
+    svg {
+      margin: 0;
+    }
   }
 `;
 
 const StyledCardTime = styled.div`
-  font-size: 0.75rem;
+  font-size: 100%;
   font-weight: ${(props) => props.theme.typography.weightRegular};
+  @media (max-width: 996px) {
+    font-size: 0.75rem;
+    font-weight: ${(props) => props.theme.typography.weightRegular};
+  }
 `;
 
 const StyledCardTemperature = styled.div`
-  font-size: 0.75rem;
+  font-size: 100%;
   font-weight: ${(props) => props.theme.typography.weightRegular};
+  @media (max-width: 996px) {
+    font-size: 0.75rem;
+    font-weight: ${(props) => props.theme.typography.weightRegular};
+  }
 `;
 
 const TodayAt = () => {

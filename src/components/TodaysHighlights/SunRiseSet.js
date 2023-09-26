@@ -4,7 +4,7 @@ import { ReactComponent as SunRiseIcon } from "../../images/Sunrise.svg";
 import { ReactComponent as SunSet } from "../../images/Sunset.svg";
 
 const StyledSunRiseSet = styled.div`
-  width: 33.25rem;
+  width: 95%;
   height: 6.875rem;
   display: flex;
   flex-direction: column;

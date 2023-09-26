@@ -6,25 +6,47 @@ import { ReactComponent as VisibilityIcon } from "../../images/Visibility.svg";
 import { ReactComponent as FeelsLikeIcon } from "../../images/FeelsLike.svg";
 
 const StyledContainer = styled.div`
-  width: 33.25rem;
+  flex: 0 0 100%;
+  width: 95%;
   height: 6.875rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   gap: 1rem 1rem;
-  margin: 1rem auto 0 auto;
+  margin: 1rem auto 1rem auto;
+  @media (max-width: 996px) {
+    width: 100%;
+    flex: 0 0 100%;
+    flex-wrap: nowrap;
+  }
+`;
+
+const StyledDataWrapper = styled.div`
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem 1rem;
 `;
 
 const StyledOtherData = styled.div`
-  width: 16.125rem;
-  height: 5.5rem;
+  flex: 0 0 100%;
+  /* width: 16.125rem; */
+  /* height: 5.5rem; */
   display: flex;
   justify-content: center;
   flex-direction: column;
   border-radius: 1rem;
   background-color: ${(props) => props.theme.color.backgroundthird};
   font-weight: ${(props) => props.theme.typography.weightRegular};
+
+  @media (max-width: 996px) {
+    flex: 0 0 90%;
+  }
 `;
 
 const StyledTitle = styled.div`
@@ -57,6 +79,7 @@ const StyledData = styled.div`
   align-items: flex-end;
   font-size: 1.75rem;
 `;
+
 const Styledpercent = styled.div`
   font-size: 1.25rem;
 `;
@@ -64,42 +87,46 @@ const Styledpercent = styled.div`
 const OtherData = () => {
   return (
     <StyledContainer>
-      <StyledOtherData>
-        <StyledTitle>Humidity</StyledTitle>
-        <StyledDiv>
-          <HumidtyIcon />
-          <StyledData>
-            73<Styledpercent>%</Styledpercent>
-          </StyledData>
-        </StyledDiv>
-      </StyledOtherData>
-      <StyledOtherData>
-        <StyledTitle>Pressure</StyledTitle>
-        <StyledDiv>
-          <PressureIcon />
-          <StyledData>
-            1019<Styledpercent>hpa</Styledpercent>
-          </StyledData>
-        </StyledDiv>
-      </StyledOtherData>
-      <StyledOtherData>
-        <StyledTitle>Visibility</StyledTitle>
-        <StyledDiv>
-          <VisibilityIcon />
-          <StyledData>
-            2.5<Styledpercent>km</Styledpercent>
-          </StyledData>
-        </StyledDiv>
-      </StyledOtherData>
-      <StyledOtherData>
-        <StyledTitle>Feels Like</StyledTitle>
-        <StyledDiv>
-          <FeelsLikeIcon />
-          <StyledData>
-            20<Styledpercent>°C</Styledpercent>
-          </StyledData>
-        </StyledDiv>
-      </StyledOtherData>
+      <StyledDataWrapper>
+        <StyledOtherData>
+          <StyledTitle>Humidity</StyledTitle>
+          <StyledDiv>
+            <HumidtyIcon />
+            <StyledData>
+              73<Styledpercent>%</Styledpercent>
+            </StyledData>
+          </StyledDiv>
+        </StyledOtherData>
+        <StyledOtherData>
+          <StyledTitle>Pressure</StyledTitle>
+          <StyledDiv>
+            <PressureIcon />
+            <StyledData>
+              1019<Styledpercent>hpa</Styledpercent>
+            </StyledData>
+          </StyledDiv>
+        </StyledOtherData>
+      </StyledDataWrapper>
+      <StyledDataWrapper>
+        <StyledOtherData>
+          <StyledTitle>Visibility</StyledTitle>
+          <StyledDiv>
+            <VisibilityIcon />
+            <StyledData>
+              2.5<Styledpercent>km</Styledpercent>
+            </StyledData>
+          </StyledDiv>
+        </StyledOtherData>
+        <StyledOtherData>
+          <StyledTitle>Feels Like</StyledTitle>
+          <StyledDiv>
+            <FeelsLikeIcon />
+            <StyledData>
+              20<Styledpercent>°C</Styledpercent>
+            </StyledData>
+          </StyledDiv>
+        </StyledOtherData>
+      </StyledDataWrapper>
     </StyledContainer>
   );
 };

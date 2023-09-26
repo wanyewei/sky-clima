@@ -11,20 +11,11 @@ const StyledSearch = styled.div`
   position: relative;
   margin: auto;
   height: 2rem;
-  width: 20.813rem;
-  justify-content: center;
+  width: 20%;
+  justify-content: flex-start;
   align-items: center;
   background-color: #202021;
   border-radius: 3.125rem;
-  svg {
-    display: block;
-    position: relative;
-    height: 1.5rem;
-    width: 1.5rem;
-    margin-left: 0.75rem;
-    margin-right: 0.75rem;
-    cursor: pointer;
-  }
 
   &:hover {
     & > ${StyledDropDown} {
@@ -41,16 +32,47 @@ const StyledSearch = styled.div`
       z-index: 10;
     }
   }
+  @media (max-width: 996px) {
+    position: absolute;
+    top: 1.5rem;
+    right: 2.56rem;
+    width: auto;
+    margin: 0;
+  }
+`;
+
+const StyledButton = styled.button`
+  margin-left: 0.75rem;
+  border-radius: 3.125rem;
+  border: none;
+  background-color: ${(props) => props.theme.color.backgroundSurface};
+  cursor: pointer;
+  svg {
+    color: #fff;
+    display: block;
+    position: relative;
+    height: 50%;
+    margin-right: 2%;
+  }
+
+  @media (max-width: 996px) {
+    margin-left: 0;
+    padding: 0.5rem;
+    border-radius: 50%;
+  }
 `;
 
 const StyledInput = styled.input`
-  margin-left: 0.25rem;
-  width: 17rem;
+  width: 80%;
   border: none;
+  border-radius: 3.125rem;
   color: ${(props) => props.theme.color.textMain};
   background-color: ${(props) => props.theme.color.backgroundSurface};
   &:focus {
     outline: none;
+  }
+  @media (max-width: 996px) {
+    display: none;
   }
 `;
 
@@ -72,7 +94,9 @@ const StyledLi = styled.li`
 const Search = () => {
   return (
     <StyledSearch>
-      <SearchIcon />
+      <StyledButton>
+        <SearchIcon />
+      </StyledButton>
       <StyledInput
         type="text"
         name="search"

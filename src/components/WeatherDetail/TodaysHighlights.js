@@ -5,14 +5,19 @@ import SunRiseSet from "../TodaysHighlights/SunRiseSet";
 import OtherData from "../TodaysHighlights/OtherData";
 
 const StyledTodaysHighlights = styled.div`
-  width: 35.25rem;
-  height: 31.25rem;
+  flex: 0 0 100%;
+  width: 90%;
+  /* height: 100%; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   border-radius: 1rem;
   background-color: ${(props) => props.theme.color.backgroundSurface};
+  @media (max-width: 996px) {
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+  }
 `;
 
 const StyledTitle = styled.div`

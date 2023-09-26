@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { ReactComponent as WindIcon } from "../../images/wind.svg";
 
 const StyledAirQuality = styled.div`
-  width: 33.25rem;
+  width: 95%;
+  height: 100%;
   height: 6.875rem;
   display: flex;
   flex-direction: column;
@@ -35,7 +36,7 @@ const StyledDiv = styled.div`
     width: 2rem;
     height: 1.75rem;
     margin-top: 0.3rem;
-    margin-left: 1rem;
+    margin-left: 3%;
     margin-right: 1.94rem;
   }
 `;

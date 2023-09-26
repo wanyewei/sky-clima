@@ -4,11 +4,21 @@ import TodayCard from "../wheatherCard/TodayCard";
 import FutureCard from "../wheatherCard/FutureCard";
 
 const StyledWrapper = styled.div`
+  flex: 0.5;
   display: inline-flex;
   padding: 0.934rem 0rem 3.3rem 1rem;
   flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
+  margin-left: 4.5rem;
+  @media (max-width: 996px) {
+    width: 95%;
+    flex: 0 0 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 0.31rem 0.5rem 0.75rem 0.5rem;
+    padding: 0;
+  }
 `;
 
 const WeatherCard = () => {

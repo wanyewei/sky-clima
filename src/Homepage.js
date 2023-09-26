@@ -6,7 +6,23 @@ import WeatherCard from "./components/homePage/WeatherCard";
 import WeatherDetail from "./components/homePage/WeatherDetail";
 
 const StyledDiv = styled.div`
+  width: 100%;
+  height: 100%;
   background-color: #100e17;
+`;
+const StyledWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  @media (max-width: 996px) {
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
 `;
 
 const Homepage = () => {
@@ -14,8 +30,10 @@ const Homepage = () => {
     <ThemeProvider theme={theme}>
       <StyledDiv>
         <DefaultLout>
-          <WeatherCard />
-          <WeatherDetail />
+          <StyledWrapper>
+            <WeatherCard />
+            <WeatherDetail />
+          </StyledWrapper>
         </DefaultLout>
       </StyledDiv>
     </ThemeProvider>

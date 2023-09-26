@@ -3,11 +3,16 @@ import styled from "styled-components";
 import { ReactComponent as SumIcon } from "../../images/sun.svg";
 
 const StyledFutureCard = styled.div`
+  width: 90%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   /* padding: 1rem; */
   color: ${(props) => props.theme.color.textMain};
+
+  @media (max-width: 996px) {
+    width: 89%;
+  }
 `;
 
 const StyledTitle = styled.div`
@@ -22,11 +27,15 @@ const StyledWheatherForecst = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 17.75rem;
+  width: 100%;
   /* height: 8.5rem; */
   padding: 1rem;
   border-radius: 1rem;
   background-color: ${(props) => props.theme.color.backgroundSurface};
+
+  @media (max-width: 996px) {
+    margin-left: -1rem;
+  }
 `;
 
 const StyledDiv = styled.div`
@@ -55,7 +64,7 @@ const StyledTemperature = styled.div`
   }
 `;
 
-const StyledDate = styled.div`
+const StyledDate = styled.span`
   display: flex;
   flex: 1;
   justify-content: center;

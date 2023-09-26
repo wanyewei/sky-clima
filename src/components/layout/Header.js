@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ReactComponent as SearchLogoIcon } from "../../images/searchlocation.svg";
+import { ReactComponent as SearchLogoIcon } from "../../images/logol.svg";
 import Search from "../header/Search";
 import CurrentLocation from "../header/CurrentLocation";
 
@@ -12,10 +12,16 @@ const StyledHeader = styled.header`
   height: 3.7rem;
   z-index: 1;
   background-color: ${(props) => props.theme.color.backgroundColor};
+
+  @media (max-width: 996px) {
+    height: 4.0625rem;
+    justify-content: space-between;
+  }
 `;
 
 const StyledLogol = styled.div`
   display: flex;
+  position: relative;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -32,7 +38,13 @@ const StyledLogol = styled.div`
     margin-left: 1rem;
   }
 
-  @media (max-width: 995px) {
+  @media (max-width: 996px) {
+    top: 0.56rem;
+    font-size: 1rem;
+    svg {
+      height: 1.4rem;
+      width: 1.4rem;
+    }
   }
 `;
 

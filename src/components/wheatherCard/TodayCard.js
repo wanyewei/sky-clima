@@ -8,7 +8,7 @@ const StyledTodayCard = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 17.75rem;
+  width: 90%;
   height: 12.2rem;
   border-radius: 1rem;
   padding: 1rem;
