@@ -7,6 +7,7 @@ import { ReactComponent as FeelsLikeIcon } from "../../images/FeelsLike.svg";
 
 const StyledContainer = styled.div`
   flex: 0 0 100%;
+  flex-grow: 1;
   width: 95%;
   height: 6.875rem;
   display: flex;

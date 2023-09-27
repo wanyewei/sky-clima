@@ -16,6 +16,8 @@ const StyledAirQuality = styled.div`
 `;
 
 const StyledTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
   height: 0.75rem;
   margin-top: 1rem;
   margin-bottom: 1.12rem;
@@ -23,6 +25,9 @@ const StyledTitle = styled.div`
   color: ${(props) => props.theme.color.textSecondary};
   font-size: 0.75rem;
   font-weight: ${(props) => props.theme.typography.weightRegular};
+  @media (max-width: 996px) {
+    justify-content: flex-start;
+  }
 `;
 
 const StyledDiv = styled.div`
@@ -32,11 +37,11 @@ const StyledDiv = styled.div`
   margin-bottom: 1rem;
   padding-right: 3rem;
   svg {
-    flex-basis: 2rem;
+    flex-basis: 0.2;
     width: 2rem;
     height: 1.75rem;
     margin-top: 0.3rem;
-    margin-left: 3%;
+    margin-left: 1rem;
     margin-right: 1.94rem;
   }
 `;
@@ -55,16 +60,19 @@ const StyledO3Index = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  top: -2rem;
   width: 3.5rem;
   height: 1rem;
+  margin-right: 13%;
   margin-bottom: 1rem;
   border-radius: 0.5rem;
   color: #000;
   background-color: #e589b7;
   font-size: 0.625rem;
   font-weight: ${(props) => props.theme.typography.weightRegular};
+  @media (max-width: 996px) {
+    margin-left: 0.62rem;
+    margin-right: 0;
+  }
 `;
 
 const StyledIndexName = styled.div`
@@ -79,7 +87,10 @@ const StyledIndexData = styled.div`
 const AirQuality = () => {
   return (
     <StyledAirQuality>
-      <StyledTitle>Air Quality Index</StyledTitle>
+      <StyledTitle>
+        <span>Air Quality Index</span> <StyledO3Index>Very Poor</StyledO3Index>
+      </StyledTitle>
+
       <StyledDiv>
         <WindIcon />
         <StyledIndex>
@@ -95,7 +106,6 @@ const AirQuality = () => {
           <StyledIndexData>41.5</StyledIndexData>
         </StyledIndex>
         <StyledIndex>
-          <StyledO3Index>Very Poor</StyledO3Index>
           <StyledIndexName>O3</StyledIndexName>
           <StyledIndexData>23.6</StyledIndexData>
         </StyledIndex>
