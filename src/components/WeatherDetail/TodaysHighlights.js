@@ -8,8 +8,8 @@ const StyledTodaysHighlights = styled.div`
   flex: 0 0 100%;
   width: 90%;
   /* height: 100%; */
-  display: flex;
   display: -webkit-flex;
+  display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
