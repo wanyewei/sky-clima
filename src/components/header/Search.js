@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { ReactComponent as SearchIcon } from "../../images/search.svg";
+import WheatherDataContext from "../../helpers/WheatherData";
 
 const StyledDropDown = styled.div`
   display: none;
 `;
 
-const StyledSearch = styled.div`
+const StyledSearch = styled.form`
   display: flex;
   position: relative;
   margin: auto;
@@ -92,17 +93,30 @@ const StyledLi = styled.li`
 `;
 
 const Search = () => {
+  const {
+    // handleInputCHange,
+    // searchInputValue,
+    handleSubmit,
+    searchRef,
+    handleClick,
+  } = useContext(WheatherDataContext);
+
   return (
-    <StyledSearch>
-      <StyledButton>
+    <StyledSearch onSubmit={handleSubmit}>
+      <StyledButton
+        // type="submit"
+        onClick={handleClick}
+      >
         <SearchIcon />
       </StyledButton>
       <StyledInput
         type="text"
         name="search"
+        id="search"
         placeholder="Search for country,city..."
-        autoComplete="off"
-        data-search-field
+        ref={searchRef}
+        // onChange={handleInputCHange}
+        // value={searchInputValue}
       />
       {/* <StyledDropDown>
         <StyledLi>125</StyledLi>

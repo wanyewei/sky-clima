@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { theme } from "./props/Theme";
 import DefaultLout from "./components/layout/DefaultLout";
 import WeatherCard from "./components/homePage/WeatherCard";
 import WeatherDetail from "./components/homePage/WeatherDetail";
+import WheatherDataContext from "./helpers/WheatherData";
 
 const StyledDiv = styled.div`
   width: 100%;
@@ -26,12 +27,14 @@ const StyledWrapper = styled.div`
 `;
 
 const Homepage = () => {
+  const { WheatherSearch } = useContext(WheatherDataContext);
   return (
     <ThemeProvider theme={theme}>
       <StyledDiv>
         <DefaultLout>
           <StyledWrapper>
             <WeatherCard />
+            <button onClick={WheatherSearch}></button>
             <WeatherDetail />
           </StyledWrapper>
         </DefaultLout>
