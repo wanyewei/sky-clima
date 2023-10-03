@@ -167,9 +167,9 @@ export const WheatherDataProvider = ({ children }) => {
 
   const WheatherSearch = async () => {
     console.log(locationLat, locationLon);
-    // let CurrentData = await axios.get(
-    //   url.currentWheather(locationLat, locationLon)
-    // );
+    let CurrentData = await axios.get(
+      url.currentWheather(locationLat, locationLon)
+    );
 
     let forecastData = await axios.get(
       "api.openweathermap.org/data/2.5/forecast?lat=25&lon=121&appid=735bfb123ee3fcc4b6b6a329630e0fc4"
@@ -179,7 +179,7 @@ export const WheatherDataProvider = ({ children }) => {
     //   const data = res.json();
     //   console.log(data);
     // });
-    // console.log("天氣結果(json格式)", CurrentData.data);
+    console.log("天氣結果(json格式)", CurrentData.data);
     console.log("天氣結果(json格式)", forecastData.data);
   };
 
