@@ -5,15 +5,14 @@ const WheatherDataContext = createContext(null);
 
 export const WheatherDataProvider = ({ children }) => {
   const api_key = "735bfb123ee3fcc4b6b6a329630e0fc4";
-  const [searchInputValue, setSearchInputValue] = useState("");
+  // const [searchInputValue, setSearchInputValue] = useState("");//目前不需要這設定
   const [searchSubmitValue, setSearchSubmitValue] = useState("台北");
+  const [locationLat, setLocationLat] = useState(25);
+  const [locationLon, setLocationLon] = useState(121);
 
   const searchRef = useRef(null);
 
   const url = {
-    location(q) {
-      return `http://api.openweathermap.org/geo/1.0/direct?q=${q}&limit=5&appid=735bfb123ee3fcc4b6b6a329630e0fc4`;
-    },
     currentWheather(lat, lon) {
       return `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}`;
     },
@@ -148,24 +147,53 @@ export const WheatherDataProvider = ({ children }) => {
   //API處理 Start ...
 
   //尋找經緯度api
-  const LocationSearch = async () => {
-    console.log("LocationSearch", searchSubmitValue);
-    const LocationResult = await axios.get(url.location(searchSubmitValue));
 
-    console.log(LocationResult.data);
+  const LocationSearch = async () => {
+    // console.log("LocationSearch", searchSubmitValue);
+    const LocationResult = await axios.get(url.geo(searchSubmitValue));
+    const LocationResultDatas = LocationResult.data;
+    const filterLocationSearch = LocationResultDatas.filter((data) => {
+      return data.country === "TW";
+    });
+    console.log(filterLocationSearch[0]);
+    setLocationLat(filterLocationSearch[0].lat);
+    setLocationLon(filterLocationSearch[0].lon);
   };
 
+  //開始尋找地區天氣
+
+  // console.log("外部調用", LocationSearch.filterLocationSearch);
   //用經緯度尋找地方天氣資訊api...
+
   const WheatherSearch = async () => {
-    let WheatherResult = await axios.get(url.currentWheather(22, 120));
+    console.log(locationLat, locationLon);
+    // let CurrentData = await axios.get(
+    //   url.currentWheather(locationLat, locationLon)
+    // );
+
+    let forecastData = await axios.get(
+      "api.openweathermap.org/data/2.5/forecast?lat=25&lon=121&appid=735bfb123ee3fcc4b6b6a329630e0fc4"
+    );
     //fetch
-    // let WheatherResult = fetch(url.currentWheather(22, 120)).then((res) => {
+    // let WheatherCurrentDatas = fetch(url.currentWheather(22, 120)).then((res) => {
     //   const data = res.json();
     //   console.log(data);
     // });
-
-    console.log("天氣結果(json格式)", WheatherResult.data);
+    // console.log("天氣結果(json格式)", CurrentData.data);
+    console.log("天氣結果(json格式)", forecastData.data);
   };
+
+  const airPollutions = async () => {
+    let pollutionSearch = await axios.get(
+      url.airPollution(locationLat, locationLon)
+    );
+    console.log("空汙結果(json格式)", pollutionSearch.data);
+  };
+
+  useEffect(() => {
+    WheatherSearch();
+    // airPollutions();
+  }, [locationLat, locationLon]);
 
   //API處理 End ...
 
@@ -174,7 +202,7 @@ export const WheatherDataProvider = ({ children }) => {
       value={{
         WheatherSearch,
         // handleInputCHange,
-        searchInputValue,
+        // searchInputValue,
         handleSubmit,
         searchRef,
         handleClick,
