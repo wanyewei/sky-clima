@@ -17,7 +17,7 @@ export const WheatherDataProvider = ({ children }) => {
       return `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}`;
     },
     forecast(lat, lon) {
-      return `api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${api_key}`;
+      return `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${api_key}`;
     },
     airPollution(lat, lon) {
       return `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${api_key}`;
@@ -181,7 +181,7 @@ export const WheatherDataProvider = ({ children }) => {
       //   console.log(data);
       // });
       console.log("天氣結果(json格式)", CurrentData.data);
-      console.log("天氣結果(json格式)", forecastData.data);
+      console.log("未來是是天氣結果(json格式)", forecastData.data);
     } catch (e) {
       console.log(e);
     }
