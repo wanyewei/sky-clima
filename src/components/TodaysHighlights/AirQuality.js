@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { ReactComponent as WindIcon } from "../../images/wind.svg";
+import WheatherDataContext from "../../helpers/WheatherData";
 
 const StyledAirQuality = styled.div`
   width: 95%;
@@ -85,29 +86,31 @@ const StyledIndexData = styled.div`
 `;
 
 const AirQuality = () => {
+  const { pollution } = useContext(WheatherDataContext);
   return (
     <StyledAirQuality>
       <StyledTitle>
-        <span>Air Quality Index</span> <StyledO3Index>Very Poor</StyledO3Index>
+        <span>Air Quality Index</span>
+        <StyledO3Index>{pollution.AirQuality}</StyledO3Index>
       </StyledTitle>
 
       <StyledDiv>
         <WindIcon />
         <StyledIndex>
           <StyledIndexName>PM2.5</StyledIndexName>
-          <StyledIndexData>270</StyledIndexData>
+          <StyledIndexData>{pollution.PM2_5}</StyledIndexData>
         </StyledIndex>
         <StyledIndex>
           <StyledIndexName>SO2</StyledIndexName>
-          <StyledIndexData>4.53</StyledIndexData>
+          <StyledIndexData>{pollution.SO2}</StyledIndexData>
         </StyledIndex>
         <StyledIndex>
           <StyledIndexName>NO2</StyledIndexName>
-          <StyledIndexData>41.5</StyledIndexData>
+          <StyledIndexData>{pollution.NO2}</StyledIndexData>
         </StyledIndex>
         <StyledIndex>
           <StyledIndexName>O3</StyledIndexName>
-          <StyledIndexData>23.6</StyledIndexData>
+          <StyledIndexData>{pollution.O3}</StyledIndexData>
         </StyledIndex>
       </StyledDiv>
     </StyledAirQuality>

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { ReactComponent as SunIcon } from "../../images/sun.svg";
 import { ReactComponent as DateIcon } from "../../images/Date.svg";
 import { ReactComponent as LocationIcon } from "../../images/location.svg";
+import WheatherDataContext from "../../helpers/WheatherData";
 
 const StyledTodayCard = styled.div`
   display: flex;
@@ -79,23 +80,26 @@ const StyledLocation = styled.div`
 `;
 
 const TodayCard = () => {
+  const { currentWheather, searchSubmitValue } =
+    useContext(WheatherDataContext);
   return (
     <StyledTodayCard>
       <StyledTytle>Now</StyledTytle>
       <StyledCurrentWheather>
         <StyledTemperature>
-          25<StyledCelsius>°C</StyledCelsius>
+          {currentWheather.temperature}
+          <StyledCelsius>°C</StyledCelsius>
         </StyledTemperature>
         <SunIcon />
       </StyledCurrentWheather>
-      <StyledDescription>overcast clouds</StyledDescription>
+      <StyledDescription>{currentWheather.description}</StyledDescription>
       <StyledDate>
         <DateIcon />
-        Saturday 16, Sep
+        {currentWheather.observationTime}
       </StyledDate>
       <StyledLocation>
         <LocationIcon />
-        Pingtung, Taiwan
+        {searchSubmitValue}, Taiwan
       </StyledLocation>
     </StyledTodayCard>
   );

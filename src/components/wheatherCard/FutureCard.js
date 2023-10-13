@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { ReactComponent as SumIcon } from "../../images/sun.svg";
+import WheatherDataContext from "../../helpers/WheatherData";
 
 const StyledFutureCard = styled.div`
   width: 90%;
@@ -81,12 +82,26 @@ const StyledDay = styled.div`
 `;
 
 const FutureCard = () => {
+  const { forecastDatas } = useContext(WheatherDataContext);
+
   return (
     <StyledFutureCard>
       <StyledTitle>4 Days Forecast</StyledTitle>
 
       <StyledWheatherForecst>
-        <StyledDiv>
+        {forecastDatas.forecastList24.slice(0, 8).map((data, index) => {
+          <StyledDiv key={index}>
+            <StyledTemperature>
+              <SumIcon />
+              {/* {console.log(data)} */}
+              {data.main.temp}°C
+            </StyledTemperature>
+            <StyledDate>{data.dt_txt}</StyledDate>
+            <StyledDay>{data.dt}</StyledDay>
+          </StyledDiv>;
+        })}
+
+        {/* <StyledDiv>
           <StyledTemperature>
             <SumIcon />
             30°C
@@ -117,7 +132,7 @@ const FutureCard = () => {
           </StyledTemperature>
           <StyledDate>17 Sep</StyledDate>
           <StyledDay>Sunday</StyledDay>
-        </StyledDiv>
+        </StyledDiv> */}
       </StyledWheatherForecst>
     </StyledFutureCard>
   );

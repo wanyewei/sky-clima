@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { ReactComponent as SunRiseIcon } from "../../images/Sunrise.svg";
 import { ReactComponent as SunSet } from "../../images/Sunset.svg";
+import WheatherDataContext from "../../helpers/WheatherData";
 
 const StyledSunRiseSet = styled.div`
   width: 95%;
@@ -69,6 +70,7 @@ const StyledIndexTime = styled.div`
 `;
 
 const SunRiseSet = () => {
+  const { currentWheather } = useContext(WheatherDataContext);
   return (
     <StyledSunRiseSet>
       <StyledTitle>Sunrise & Sunset</StyledTitle>
@@ -77,14 +79,14 @@ const SunRiseSet = () => {
           <SunRiseIcon />
           <StyledIndexWrapper>
             <StyledIndexName>Sunrise</StyledIndexName>
-            <StyledIndexTime>6:20 AM</StyledIndexTime>
+            <StyledIndexTime>{currentWheather.sunRise}</StyledIndexTime>
           </StyledIndexWrapper>
         </StyledIndex>
         <StyledIndex>
           <SunSet />
           <StyledIndexWrapper>
             <StyledIndexName>SunSet</StyledIndexName>
-            <StyledIndexTime>6:01 PM</StyledIndexTime>
+            <StyledIndexTime>{currentWheather.sunSet}</StyledIndexTime>
           </StyledIndexWrapper>
         </StyledIndex>
       </StyledDiv>

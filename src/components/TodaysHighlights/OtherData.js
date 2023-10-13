@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { ReactComponent as HumidtyIcon } from "../../images/Humidty.svg";
 import { ReactComponent as PressureIcon } from "../../images/Pressure.svg";
 import { ReactComponent as VisibilityIcon } from "../../images/Visibility.svg";
 import { ReactComponent as FeelsLikeIcon } from "../../images/FeelsLike.svg";
+import WheatherDataContext from "../../helpers/WheatherData";
 
 const StyledContainer = styled.div`
   flex: 0 0 100%;
@@ -86,6 +87,7 @@ const Styledpercent = styled.div`
 `;
 
 const OtherData = () => {
+  const { currentWheather } = useContext(WheatherDataContext);
   return (
     <StyledContainer>
       <StyledDataWrapper>
@@ -94,7 +96,8 @@ const OtherData = () => {
           <StyledDiv>
             <HumidtyIcon />
             <StyledData>
-              73<Styledpercent>%</Styledpercent>
+              {currentWheather.humind}
+              <Styledpercent>%</Styledpercent>
             </StyledData>
           </StyledDiv>
         </StyledOtherData>
@@ -103,7 +106,8 @@ const OtherData = () => {
           <StyledDiv>
             <PressureIcon />
             <StyledData>
-              1019<Styledpercent>hpa</Styledpercent>
+              {currentWheather.pressure}
+              <Styledpercent>hpa</Styledpercent>
             </StyledData>
           </StyledDiv>
         </StyledOtherData>
@@ -114,7 +118,8 @@ const OtherData = () => {
           <StyledDiv>
             <VisibilityIcon />
             <StyledData>
-              2.5<Styledpercent>km</Styledpercent>
+              {currentWheather.visibility}
+              <Styledpercent>km</Styledpercent>
             </StyledData>
           </StyledDiv>
         </StyledOtherData>
@@ -123,7 +128,8 @@ const OtherData = () => {
           <StyledDiv>
             <FeelsLikeIcon />
             <StyledData>
-              20<Styledpercent>°C</Styledpercent>
+              {currentWheather.feels_like}
+              <Styledpercent>°C</Styledpercent>
             </StyledData>
           </StyledDiv>
         </StyledOtherData>

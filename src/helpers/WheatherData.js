@@ -9,18 +9,42 @@ export const WheatherDataProvider = ({ children }) => {
   const [searchSubmitValue, setSearchSubmitValue] = useState("台北");
   const [locationLat, setLocationLat] = useState(25);
   const [locationLon, setLocationLon] = useState(121);
+  const [currentWheather, setCurrentWheather] = useState({
+    observationTime: "",
+    locationName: searchSubmitValue,
+    description: "",
+    temperature: 0,
+    visibility: 0,
+    feels_like: 0,
+    pressure: 0,
+    humind: 0,
+    sunRise: "",
+    sunSet: "",
+  });
+  const [pollution, setPollution] = useState({
+    AirQuality: "",
+    PM2_5: 0,
+    SO2: 0,
+    NO2: 0,
+    O3: 0,
+  });
+
+  const [forecastDatas, setForecastDatas] = useState({
+    timezone: 0,
+    forecastList24: [],
+  });
 
   const searchRef = useRef(null);
 
   const url = {
     currentWheather(lat, lon) {
-      return `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${api_key}`;
+      return `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${api_key}`;
     },
     forecast(lat, lon) {
-      return `api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${api_key}`;
+      return `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&umits=metric&appid=${api_key}`;
     },
     airPollution(lat, lon) {
-      return `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${api_key}`;
+      return `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&units=metric&appid=${api_key}`;
     },
     reverseGeo(lat, lon) {
       return `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=5&appid=${api_key}`;
@@ -62,7 +86,7 @@ export const WheatherDataProvider = ({ children }) => {
     const weekDayName = weekDayNames[date.getUTCDay()];
     const monthName = monthNames[date.getUTCMonth()];
 
-    return `${weekDayName} ${date.getUTCDay()},${monthName}`;
+    return `${weekDayName} ${date.getUTCDate()},${monthName}`;
   };
 
   const getTime = (timeUnix, timezone) => {
@@ -85,7 +109,7 @@ export const WheatherDataProvider = ({ children }) => {
     return mph / 1000;
   };
 
-  const apiText = {
+  const aqiText = {
     1: {
       level: "good",
       messag: "Air quality is safety，and air pollution isn't risk.",
@@ -167,32 +191,60 @@ export const WheatherDataProvider = ({ children }) => {
 
   const WheatherSearch = async () => {
     console.log(locationLat, locationLon);
-    // let CurrentData = await axios.get(
-    //   url.currentWheather(locationLat, locationLon)
-    // );
-
-    let forecastData = await axios.get(
-      "api.openweathermap.org/data/2.5/forecast?lat=25&lon=121&appid=735bfb123ee3fcc4b6b6a329630e0fc4"
+    let currentDatas = await axios.get(
+      url.currentWheather(locationLat, locationLon)
     );
+    const currentData = currentDatas.data;
+
+    let forecastDatas = await axios.get(url.forecast(locationLat, locationLon));
     //fetch
     // let WheatherCurrentDatas = fetch(url.currentWheather(22, 120)).then((res) => {
     //   const data = res.json();
     //   console.log(data);
     // });
-    // console.log("天氣結果(json格式)", CurrentData.data);
-    console.log("天氣結果(json格式)", forecastData.data);
+    const forecastData = forecastDatas.data;
+
+    console.log("天氣結果(json格式)", currentData);
+    console.log("未來天氣結果(json格式)", forecastData);
+    setCurrentWheather({
+      ...currentWheather,
+      observationTime: getDate(currentData.dt, currentData.timezone),
+      description: currentData.weather[0].description,
+      pressure: currentData.main.pressure,
+      temperature: currentData.main.temp,
+      visibility: currentData.visibility,
+      humind: currentData.main.humidity,
+      feels_like: currentData.main.feels_like,
+      sunRise: getTime(currentData.sys.sunrise, currentData.timezone),
+      sunSet: getTime(currentData.sys.sunset, currentData.timezone),
+    });
+    setForecastDatas({
+      timezone: forecastData.city.timezone,
+      forecastList24: forecastData.list,
+    });
+    console.log(currentWheather);
   };
 
   const airPollutions = async () => {
     let pollutionSearch = await axios.get(
       url.airPollution(locationLat, locationLon)
     );
-    console.log("空汙結果(json格式)", pollutionSearch.data);
+    const pollutionData = pollutionSearch.data;
+    const aqiLevel = pollutionData.list[0].main.aqi;
+    console.log("空汙結果(json格式)", pollutionData);
+
+    setPollution({
+      AirQuality: aqiText[aqiLevel].level,
+      PM2_5: pollutionData.list[0].components.pm2_5,
+      SO2: pollutionData.list[0].components.so2,
+      NO2: pollutionData.list[0].components.no2,
+      O3: pollutionData.list[0].components.o3,
+    });
   };
 
   useEffect(() => {
     WheatherSearch();
-    // airPollutions();
+    airPollutions();
   }, [locationLat, locationLon]);
 
   //API處理 End ...
@@ -206,6 +258,11 @@ export const WheatherDataProvider = ({ children }) => {
         handleSubmit,
         searchRef,
         handleClick,
+        searchSubmitValue,
+        pollution,
+        currentWheather,
+        forecastDatas,
+        getHours,
       }}
     >
       {children}
