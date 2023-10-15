@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { ReactComponent as SunIcon } from "../../images/sun.svg";
 import { ReactComponent as WindDirectionIcon } from "../../images/wind direction.svg";
 import WheatherDataContext from "../../helpers/WheatherData";
+import W04n from "../../images/wheathers/04d.png";
 
 const StyledTodayAt = styled.div`
   flex: 0 0 100%;
@@ -141,7 +142,7 @@ const StyledCardTime = styled.div`
 `;
 
 const StyledCardTemperature = styled.div`
-  font-size: 100%;
+  font-size: 1rem;
   font-weight: ${(props) => props.theme.typography.weightRegular};
   @media (max-width: 996px) {
     font-size: 0.75rem;
@@ -156,6 +157,8 @@ const TodayAt = () => {
       <StyledTitle>Today at</StyledTitle>
       <Styledslider>
         {forecastDatas.forecastList24.slice(0, 8).map((data, index) => {
+          const windDirection = data.wind.deg;
+          console.log(data.weather.icon);
           return (
             <StyledSlide key={index}>
               <StyledFooter>
@@ -163,7 +166,13 @@ const TodayAt = () => {
                   <StyledCardTime>
                     {getHours(data.dt, forecastDatas.timezone)}
                   </StyledCardTime>
-                  <SunIcon />
+                  <img
+                    src={` https://openweathermap.org/img/wn/${data.weather.icon}@2x.png`}
+                    width={48}
+                    height={48}
+                    // loading="lazy"
+                    alt="direction"
+                  />
                   <StyledCardTemperature>
                     {data.main.temp}
                   </StyledCardTemperature>
@@ -172,7 +181,9 @@ const TodayAt = () => {
                   <StyledCardTime>
                     {getHours(data.dt, forecastDatas.timezone)}
                   </StyledCardTime>
-                  <WindDirectionIcon />
+                  <WindDirectionIcon
+                    style={{ transform: `rotate(${windDirection - 315}deg)` }}
+                  />
                   <StyledCardTemperature>
                     {data.wind.speed} km/h
                   </StyledCardTemperature>
