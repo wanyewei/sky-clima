@@ -41,7 +41,7 @@ export const WheatherDataProvider = ({ children }) => {
       return `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${api_key}`;
     },
     forecast(lat, lon) {
-      return `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&umits=metric&appid=${api_key}`;
+      return `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${api_key}`;
     },
     airPollution(lat, lon) {
       return `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&units=metric&appid=${api_key}`;
@@ -263,6 +263,8 @@ export const WheatherDataProvider = ({ children }) => {
         currentWheather,
         forecastDatas,
         getHours,
+        weekDayNames,
+        monthNames,
       }}
     >
       {children}

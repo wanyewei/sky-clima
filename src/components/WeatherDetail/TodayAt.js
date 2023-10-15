@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { ReactComponent as SunIcon } from "../../images/sun.svg";
 import { ReactComponent as WindDirectionIcon } from "../../images/wind direction.svg";
+import WheatherDataContext from "../../helpers/WheatherData";
 
 const StyledTodayAt = styled.div`
   flex: 0 0 100%;
@@ -149,122 +150,37 @@ const StyledCardTemperature = styled.div`
 `;
 
 const TodayAt = () => {
+  const { forecastDatas, getHours } = useContext(WheatherDataContext);
   return (
     <StyledTodayAt>
       <StyledTitle>Today at</StyledTitle>
       <Styledslider>
-        <StyledSlide>
-          <StyledFooter>
-            <StyledCard>
-              <StyledCardTime>2 AM</StyledCardTime>
-              <SunIcon />
-              <StyledCardTemperature>30°C </StyledCardTemperature>
-            </StyledCard>
-            <StyledCard>
-              <StyledCardTime>2 AM</StyledCardTime>
-              <WindDirectionIcon />
-              <StyledCardTemperature>6 km/h </StyledCardTemperature>
-            </StyledCard>
-          </StyledFooter>
-        </StyledSlide>
-        <StyledSlide>
-          <StyledFooter>
-            <StyledCard>
-              <StyledCardTime>2 AM</StyledCardTime>
-              <SunIcon />
-              <StyledCardTemperature>30°C </StyledCardTemperature>
-            </StyledCard>
-            <StyledCard>
-              <StyledCardTime>2 AM</StyledCardTime>
-              <WindDirectionIcon />
-              <StyledCardTemperature>6 km/h </StyledCardTemperature>
-            </StyledCard>
-          </StyledFooter>
-        </StyledSlide>
-        <StyledSlide>
-          <StyledFooter>
-            <StyledCard>
-              <StyledCardTime>2 AM</StyledCardTime>
-              <SunIcon />
-              <StyledCardTemperature>30°C </StyledCardTemperature>
-            </StyledCard>
-            <StyledCard>
-              <StyledCardTime>2 AM</StyledCardTime>
-              <WindDirectionIcon />
-              <StyledCardTemperature>6 km/h </StyledCardTemperature>
-            </StyledCard>
-          </StyledFooter>
-        </StyledSlide>
-        <StyledSlide>
-          <StyledFooter>
-            <StyledCard>
-              <StyledCardTime>2 AM</StyledCardTime>
-              <SunIcon />
-              <StyledCardTemperature>30°C </StyledCardTemperature>
-            </StyledCard>
-            <StyledCard>
-              <StyledCardTime>2 AM</StyledCardTime>
-              <WindDirectionIcon />
-              <StyledCardTemperature>6 km/h </StyledCardTemperature>
-            </StyledCard>
-          </StyledFooter>
-        </StyledSlide>
-        <StyledSlide>
-          <StyledFooter>
-            <StyledCard>
-              <StyledCardTime>2 AM</StyledCardTime>
-              <SunIcon />
-              <StyledCardTemperature>30°C </StyledCardTemperature>
-            </StyledCard>
-            <StyledCard>
-              <StyledCardTime>2 AM</StyledCardTime>
-              <WindDirectionIcon />
-              <StyledCardTemperature>6 km/h </StyledCardTemperature>
-            </StyledCard>
-          </StyledFooter>
-        </StyledSlide>
-        <StyledSlide>
-          <StyledFooter>
-            <StyledCard>
-              <StyledCardTime>2 AM</StyledCardTime>
-              <SunIcon />
-              <StyledCardTemperature>30°C </StyledCardTemperature>
-            </StyledCard>
-            <StyledCard>
-              <StyledCardTime>2 AM</StyledCardTime>
-              <WindDirectionIcon />
-              <StyledCardTemperature>6 km/h </StyledCardTemperature>
-            </StyledCard>
-          </StyledFooter>
-        </StyledSlide>
-        <StyledSlide>
-          <StyledFooter>
-            <StyledCard>
-              <StyledCardTime>2 AM</StyledCardTime>
-              <SunIcon />
-              <StyledCardTemperature>30°C </StyledCardTemperature>
-            </StyledCard>
-            <StyledCard>
-              <StyledCardTime>2 AM</StyledCardTime>
-              <WindDirectionIcon />
-              <StyledCardTemperature>6 km/h </StyledCardTemperature>
-            </StyledCard>
-          </StyledFooter>
-        </StyledSlide>
-        <StyledSlide>
-          <StyledFooter>
-            <StyledCard>
-              <StyledCardTime>2 AM</StyledCardTime>
-              <SunIcon />
-              <StyledCardTemperature>30°C </StyledCardTemperature>
-            </StyledCard>
-            <StyledCard>
-              <StyledCardTime>2 AM</StyledCardTime>
-              <WindDirectionIcon />
-              <StyledCardTemperature>6 km/h </StyledCardTemperature>
-            </StyledCard>
-          </StyledFooter>
-        </StyledSlide>
+        {forecastDatas.forecastList24.slice(0, 8).map((data, index) => {
+          return (
+            <StyledSlide key={index}>
+              <StyledFooter>
+                <StyledCard>
+                  <StyledCardTime>
+                    {getHours(data.dt, forecastDatas.timezone)}
+                  </StyledCardTime>
+                  <SunIcon />
+                  <StyledCardTemperature>
+                    {data.main.temp}
+                  </StyledCardTemperature>
+                </StyledCard>
+                <StyledCard>
+                  <StyledCardTime>
+                    {getHours(data.dt, forecastDatas.timezone)}
+                  </StyledCardTime>
+                  <WindDirectionIcon />
+                  <StyledCardTemperature>
+                    {data.wind.speed} km/h
+                  </StyledCardTemperature>
+                </StyledCard>
+              </StyledFooter>
+            </StyledSlide>
+          );
+        })}
       </Styledslider>
     </StyledTodayAt>
   );

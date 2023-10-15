@@ -82,23 +82,35 @@ const StyledDay = styled.div`
 `;
 
 const FutureCard = () => {
-  const { forecastDatas } = useContext(WheatherDataContext);
+  const { forecastDatas, weekDayNames, monthNames } =
+    useContext(WheatherDataContext);
 
   return (
     <StyledFutureCard>
-      <StyledTitle>4 Days Forecast</StyledTitle>
+      <StyledTitle>5 Days Forecast</StyledTitle>
 
       <StyledWheatherForecst>
-        {forecastDatas.forecastList24.slice(0, 8).map((data, index) => {
-          <StyledDiv key={index}>
-            <StyledTemperature>
-              <SumIcon />
-              {/* {console.log(data)} */}
-              {data.main.temp}°C
-            </StyledTemperature>
-            <StyledDate>{data.dt_txt}</StyledDate>
-            <StyledDay>{data.dt}</StyledDay>
-          </StyledDiv>;
+        {forecastDatas.forecastList24.map((data, index) => {
+          if (index % 8 === 0) {
+            let dt = new Date(data.dt_txt);
+            // console.log(timestamp);
+            const weekname = weekDayNames[dt.getUTCDay()];
+            const monthName = monthNames[dt.getUTCMonth()];
+
+            return (
+              <StyledDiv key={index}>
+                <StyledTemperature>
+                  <SumIcon />
+                  {data.main.temp}°C
+                </StyledTemperature>
+                <StyledDate>
+                  {dt.getDate()}&nbsp;
+                  {monthName}
+                </StyledDate>
+                <StyledDay>{weekname}</StyledDay>
+              </StyledDiv>
+            );
+          }
         })}
 
         {/* <StyledDiv>
