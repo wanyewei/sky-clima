@@ -100,7 +100,13 @@ const FutureCard = () => {
             return (
               <StyledDiv key={index}>
                 <StyledTemperature>
-                  <SumIcon />
+                  <img
+                    src={` https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
+                    width={28}
+                    height={28}
+                    loading="lazy"
+                    alt="direction"
+                  />
                   {data.main.temp}°C
                 </StyledTemperature>
                 <StyledDate>

@@ -99,9 +99,7 @@ const StyledFooter = styled.div`
 `;
 
 const StyledCard = styled.div`
-  /* flex: 0 0 80%; */
   width: 100%;
-  /* height: 6.75rem; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -109,11 +107,11 @@ const StyledCard = styled.div`
   border-radius: 1rem;
   padding: 1rem 0 1rem 0;
   background-color: ${(props) => props.theme.color.backgroundSurface};
-  svg {
-    width: 40%;
-    height: 40%;
-    /* height: 40%; */
-    margin: 0.69rem 0;
+
+  img {
+    height: 48px;
+    width: 48px;
+    margin: 1rem 0;
   }
 
   @media (max-width: 996px) {
@@ -126,8 +124,10 @@ const StyledCard = styled.div`
     border-radius: 1rem;
     /* padding: 0.5rem 1.5rem 0.5rem 1.5rem;s */
     background-color: ${(props) => props.theme.color.backgroundSurface};
-    svg {
-      margin: 0;
+    img {
+      height: 48px;
+      width: 48px;
+      margin: 1rem 0;
     }
   }
 `;
@@ -158,7 +158,6 @@ const TodayAt = () => {
       <Styledslider>
         {forecastDatas.forecastList24.slice(0, 8).map((data, index) => {
           const windDirection = data.wind.deg;
-          console.log(data.weather.icon);
           return (
             <StyledSlide key={index}>
               <StyledFooter>
@@ -167,14 +166,14 @@ const TodayAt = () => {
                     {getHours(data.dt, forecastDatas.timezone)}
                   </StyledCardTime>
                   <img
-                    src={` https://openweathermap.org/img/wn/${data.weather.icon}@2x.png`}
+                    src={` https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
                     width={48}
                     height={48}
-                    // loading="lazy"
+                    loading="lazy"
                     alt="direction"
                   />
                   <StyledCardTemperature>
-                    {data.main.temp}
+                    {data.main.temp} °C
                   </StyledCardTemperature>
                 </StyledCard>
                 <StyledCard>

@@ -6,9 +6,10 @@ const WheatherDataContext = createContext(null);
 export const WheatherDataProvider = ({ children }) => {
   const api_key = "735bfb123ee3fcc4b6b6a329630e0fc4";
   // const [searchInputValue, setSearchInputValue] = useState("");//目前不需要這設定
-  const [searchSubmitValue, setSearchSubmitValue] = useState("台北");
+  const [searchSubmitValue, setSearchSubmitValue] = useState("Taipei");
   const [locationLat, setLocationLat] = useState(25);
   const [locationLon, setLocationLon] = useState(121);
+  const [cityName, setCityName] = useState("台北");
   const [currentWheather, setCurrentWheather] = useState({
     observationTime: "",
     locationName: searchSubmitValue,
@@ -20,6 +21,7 @@ export const WheatherDataProvider = ({ children }) => {
     humind: 0,
     sunRise: "",
     sunSet: "",
+    icon: "",
   });
   const [pollution, setPollution] = useState({
     AirQuality: "",
@@ -162,10 +164,6 @@ export const WheatherDataProvider = ({ children }) => {
     setSearchSubmitValue(searchRef.current.value);
   };
 
-  useEffect(() => {
-    LocationSearch();
-  }, [searchSubmitValue]);
-
   // Search.js搜尋  End ...
 
   //API處理 Start ...
@@ -180,9 +178,14 @@ export const WheatherDataProvider = ({ children }) => {
       return data.country === "TW";
     });
     console.log(filterLocationSearch[0]);
+    setCityName(filterLocationSearch[0].local_names.zh);
     setLocationLat(filterLocationSearch[0].lat);
     setLocationLon(filterLocationSearch[0].lon);
   };
+
+  useEffect(() => {
+    LocationSearch();
+  }, [searchSubmitValue]);
 
   //開始尋找地區天氣
 
@@ -197,11 +200,7 @@ export const WheatherDataProvider = ({ children }) => {
     const currentData = currentDatas.data;
 
     let forecastDatas = await axios.get(url.forecast(locationLat, locationLon));
-    //fetch
-    // let WheatherCurrentDatas = fetch(url.currentWheather(22, 120)).then((res) => {
-    //   const data = res.json();
-    //   console.log(data);
-    // });
+
     const forecastData = forecastDatas.data;
 
     console.log("天氣結果(json格式)", currentData);
@@ -217,14 +216,15 @@ export const WheatherDataProvider = ({ children }) => {
       feels_like: currentData.main.feels_like,
       sunRise: getTime(currentData.sys.sunrise, currentData.timezone),
       sunSet: getTime(currentData.sys.sunset, currentData.timezone),
+      icon: currentData.weather[0].icon,
     });
     setForecastDatas({
       timezone: forecastData.city.timezone,
       forecastList24: forecastData.list,
     });
-    console.log(currentWheather);
   };
 
+  //空汙搜尋
   const airPollutions = async () => {
     let pollutionSearch = await axios.get(
       url.airPollution(locationLat, locationLon)
@@ -242,23 +242,62 @@ export const WheatherDataProvider = ({ children }) => {
     });
   };
 
+  //自動定位
+  const locationName = async () => {
+    const locationNames = await axios.get(
+      url.reverseGeo(locationLat, locationLon)
+    );
+    const LocationResultDatas = locationNames.data;
+    const filterLocationData = LocationResultDatas.filter((data) => {
+      return data.country === "TW";
+    });
+
+    setCityName(filterLocationData[0].local_names.zh);
+  };
+
   useEffect(() => {
     WheatherSearch();
     airPollutions();
+    locationName();
   }, [locationLat, locationLon]);
+
+  //自動定位按鈕觸發
+  const handleAutoLocation = () => {
+    function successHandler(position) {
+      console.log(position);
+      setLocationLat(position.coords.latitude);
+      setLocationLon(position.coords.longitude);
+    }
+
+    function errorHandler(err) {
+      console.log(err);
+      alert(err.messag);
+    }
+
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(successHandler, errorHandler, {
+        enableHighAccuracy: true,
+        timeout: 1000,
+        maximumAge: 0,
+      });
+    } else {
+      alert("你的裝置或瀏覽器不支援定位功能");
+    }
+  };
 
   //API處理 End ...
 
   return (
     <WheatherDataContext.Provider
       value={{
+        handleAutoLocation,
         WheatherSearch,
         // handleInputCHange,
         // searchInputValue,
         handleSubmit,
         searchRef,
         handleClick,
-        searchSubmitValue,
+        cityName,
         pollution,
         currentWheather,
         forecastDatas,

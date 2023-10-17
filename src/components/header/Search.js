@@ -113,7 +113,7 @@ const Search = () => {
         type="text"
         name="search"
         id="search"
-        placeholder="Search for country,city..."
+        placeholder="Search for city in Taiwan ..."
         ref={searchRef}
         // onChange={handleInputCHange}
         // value={searchInputValue}

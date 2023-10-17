@@ -80,8 +80,8 @@ const StyledLocation = styled.div`
 `;
 
 const TodayCard = () => {
-  const { currentWheather, searchSubmitValue } =
-    useContext(WheatherDataContext);
+  const { currentWheather, cityName } = useContext(WheatherDataContext);
+
   return (
     <StyledTodayCard>
       <StyledTytle>Now</StyledTytle>
@@ -90,7 +90,13 @@ const TodayCard = () => {
           {currentWheather.temperature}
           <StyledCelsius>°C</StyledCelsius>
         </StyledTemperature>
-        <SunIcon />
+        <img
+          src={` https://openweathermap.org/img/wn/${currentWheather.icon}@2x.png`}
+          width={60}
+          height={60}
+          loading="lazy"
+          alt="direction"
+        />
       </StyledCurrentWheather>
       <StyledDescription>{currentWheather.description}</StyledDescription>
       <StyledDate>
@@ -99,7 +105,7 @@ const TodayCard = () => {
       </StyledDate>
       <StyledLocation>
         <LocationIcon />
-        {searchSubmitValue}, Taiwan
+        {cityName}, Taiwan
       </StyledLocation>
     </StyledTodayCard>
   );
