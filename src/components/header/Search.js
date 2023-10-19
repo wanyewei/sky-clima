@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as SearchIcon } from "../../images/search.svg";
 import WheatherDataContext from "../../helpers/WheatherData";
@@ -20,11 +20,15 @@ const StyledSearch = styled.form`
 
   &:hover {
     & > ${StyledDropDown} {
-      display: block;
-      position: fixed;
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      justify-content: center;
+      align-items: center;
+      top: 100%;
+      left: 0;
       width: 100%;
-      max-width: 24%;
-      border-radius: 3.125rem;
+      border-radius: 1.5rem;
       color: ${(props) => props.theme.color.textMain};
       background-color: ${(props) => props.theme.color.backgroundColor};
       box-shadow: 0px 2px 3px 0px #7b7980;
@@ -78,17 +82,19 @@ const StyledInput = styled.input`
 `;
 
 const StyledLi = styled.li`
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   color: ${(props) => props.theme.color.textMain};
   padding: 0.75rem;
-  font-size: 0.625rem;
-  margin: 0.313rem 0.625rem;
+  font-size: 0.8rem;
+  /* margin: 0.313rem 0.625rem; */
   cursor: pointer;
-  text-align: center;
   justify-content: centers;
   &:hover {
     background-color: aquamarine;
-    border-radius: 3.125rem;
+    border-radius: 1.5rem;
   }
 `;
 
@@ -99,6 +105,8 @@ const Search = () => {
     handleSubmit,
     searchRef,
     handleClick,
+    serchHistory,
+    handleHistoryClick,
   } = useContext(WheatherDataContext);
 
   return (
@@ -118,12 +126,26 @@ const Search = () => {
         // onChange={handleInputCHange}
         // value={searchInputValue}
       />
-      {/* <StyledDropDown>
-        <StyledLi>125</StyledLi>
-        <StyledLi>15</StyledLi>
-        <StyledLi>66</StyledLi>
-        <StyledLi>777</StyledLi>
-      </StyledDropDown> */}
+      <StyledDropDown>
+        {console.log(serchHistory)}
+        {console.log(serchHistory.length)}
+        {serchHistory.length > 0 ? (
+          serchHistory.map((item, index) => {
+            return (
+              <StyledLi
+                key={index}
+                onClick={() => {
+                  handleHistoryClick(item);
+                }}
+              >
+                {item}
+              </StyledLi>
+            );
+          })
+        ) : (
+          <StyledLi>No search history available</StyledLi>
+        )}
+      </StyledDropDown>
     </StyledSearch>
   );
 };

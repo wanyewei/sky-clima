@@ -107,7 +107,7 @@ const FutureCard = () => {
                     loading="lazy"
                     alt="direction"
                   />
-                  {data.main.temp}°C
+                  {Math.round(data.main.temp)}°C
                 </StyledTemperature>
                 <StyledDate>
                   {dt.getDate()}&nbsp;

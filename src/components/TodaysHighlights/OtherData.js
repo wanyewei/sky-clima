@@ -83,7 +83,9 @@ const StyledData = styled.div`
 `;
 
 const Styledpercent = styled.div`
-  font-size: 1.25rem;
+  display: flex;
+  font-size: 1.4rem;
+  align-items: flex-end;
 `;
 
 const OtherData = () => {
@@ -128,7 +130,7 @@ const OtherData = () => {
           <StyledDiv>
             <FeelsLikeIcon />
             <StyledData>
-              {currentWheather.feels_like}
+              {Math.round(currentWheather.feels_like)}
               <Styledpercent>°C</Styledpercent>
             </StyledData>
           </StyledDiv>

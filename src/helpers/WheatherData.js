@@ -6,6 +6,7 @@ const WheatherDataContext = createContext(null);
 export const WheatherDataProvider = ({ children }) => {
   const api_key = "735bfb123ee3fcc4b6b6a329630e0fc4";
   // const [searchInputValue, setSearchInputValue] = useState("");//目前不需要這設定
+  const [serchHistory, setSerchHistory] = useState([]);
   const [searchSubmitValue, setSearchSubmitValue] = useState("Taipei");
   const [locationLat, setLocationLat] = useState(25);
   const [locationLon, setLocationLon] = useState(121);
@@ -147,6 +148,7 @@ export const WheatherDataProvider = ({ children }) => {
   // //Search.js搜尋 ，form表單提交內容
   const handleSubmit = (e) => {
     e.preventDefault();
+    e.target.reset();
     // console.log("提交的值", searchInputValue);
     // console.log("handleSubmit的值 : ", e.target.value);
     // setSearchSubmitValue(searchInputValue);
@@ -160,8 +162,20 @@ export const WheatherDataProvider = ({ children }) => {
   // }, [searchInputValue]);
 
   const handleClick = () => {
-    console.log(searchRef.current.value);
-    setSearchSubmitValue(searchRef.current.value);
+    const searchText = searchRef.current.value;
+    console.log(searchText);
+    setSearchSubmitValue(searchText);
+    setSerchHistory((prevHistory) => {
+      const historySet = new Set([...prevHistory, searchText]);
+      return Array.from(historySet);
+    });
+  };
+
+  const handleHistoryClick = (historyItem) => {
+    console.log(historyItem);
+    if (historyItem) {
+      setSearchSubmitValue(historyItem);
+    }
   };
 
   // Search.js搜尋  End ...
@@ -177,7 +191,6 @@ export const WheatherDataProvider = ({ children }) => {
     const filterLocationSearch = LocationResultDatas.filter((data) => {
       return data.country === "TW";
     });
-    console.log(filterLocationSearch[0]);
     setCityName(filterLocationSearch[0].local_names.zh);
     setLocationLat(filterLocationSearch[0].lat);
     setLocationLon(filterLocationSearch[0].lon);
@@ -193,7 +206,6 @@ export const WheatherDataProvider = ({ children }) => {
   //用經緯度尋找地方天氣資訊api...
 
   const WheatherSearch = async () => {
-    console.log(locationLat, locationLon);
     let currentDatas = await axios.get(
       url.currentWheather(locationLat, locationLon)
     );
@@ -231,7 +243,6 @@ export const WheatherDataProvider = ({ children }) => {
     );
     const pollutionData = pollutionSearch.data;
     const aqiLevel = pollutionData.list[0].main.aqi;
-    console.log("空汙結果(json格式)", pollutionData);
 
     setPollution({
       AirQuality: aqiText[aqiLevel].level,
@@ -271,7 +282,7 @@ export const WheatherDataProvider = ({ children }) => {
 
     function errorHandler(err) {
       console.log(err);
-      alert(err.messag);
+      alert(err);
     }
 
     if ("geolocation" in navigator) {
@@ -290,6 +301,8 @@ export const WheatherDataProvider = ({ children }) => {
   return (
     <WheatherDataContext.Provider
       value={{
+        serchHistory,
+        handleHistoryClick,
         handleAutoLocation,
         WheatherSearch,
         // handleInputCHange,

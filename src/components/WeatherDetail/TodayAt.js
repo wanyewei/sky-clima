@@ -173,7 +173,7 @@ const TodayAt = () => {
                     alt="direction"
                   />
                   <StyledCardTemperature>
-                    {data.main.temp} °C
+                    {Math.round(data.main.temp * 10) / 10} °C
                   </StyledCardTemperature>
                 </StyledCard>
                 <StyledCard>
@@ -184,7 +184,7 @@ const TodayAt = () => {
                     style={{ transform: `rotate(${windDirection - 315}deg)` }}
                   />
                   <StyledCardTemperature>
-                    {data.wind.speed} km/h
+                    {Math.round(data.wind.speed * 10) / 10} km/h
                   </StyledCardTemperature>
                 </StyledCard>
               </StyledFooter>

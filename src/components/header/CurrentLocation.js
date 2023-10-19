@@ -8,7 +8,7 @@ const StyledWrapp = styled.div`
   position: relative;
   right: 1rem;
   top: 1rem;
-  width: 7%;
+  width: 6%;
   height: 2rem;
   border-radius: 3.125rem;
   justify-content: center;

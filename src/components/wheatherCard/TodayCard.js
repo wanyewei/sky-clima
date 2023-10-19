@@ -87,7 +87,7 @@ const TodayCard = () => {
       <StyledTytle>Now</StyledTytle>
       <StyledCurrentWheather>
         <StyledTemperature>
-          {currentWheather.temperature}
+          {Math.round(currentWheather.temperature * 10) / 10}
           <StyledCelsius>°C</StyledCelsius>
         </StyledTemperature>
         <img
