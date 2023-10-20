@@ -165,11 +165,24 @@ export const WheatherDataProvider = ({ children }) => {
     const searchText = searchRef.current.value;
     console.log(searchText);
     setSearchSubmitValue(searchText);
-    setSerchHistory((prevHistory) => {
-      const historySet = new Set([...prevHistory, searchText]);
-      return Array.from(historySet);
-    });
+    const updateSerchHistory = [...serchHistory, searchText];
+    localStorage.setItem("serchHistory", JSON.stringify(updateSerchHistory));
   };
+
+  useEffect(() => {
+    const storedHistory = JSON.parse(localStorage.getItem("serchHistory"));
+    if (storedHistory) {
+      console.log("storedHistory", storedHistory);
+      setSerchHistory((prevHistory) => {
+        if (prevHistory[0] === "") {
+          prevHistory.remove("");
+        }
+        const historySet = new Set(storedHistory);
+        console.log("array", Array.from(historySet));
+        return Array.from(historySet);
+      });
+    }
+  }, [searchSubmitValue]);
 
   const handleHistoryClick = (historyItem) => {
     console.log(historyItem);
@@ -202,7 +215,6 @@ export const WheatherDataProvider = ({ children }) => {
 
   //開始尋找地區天氣
 
-  // console.log("外部調用", LocationSearch.filterLocationSearch);
   //用經緯度尋找地方天氣資訊api...
 
   const WheatherSearch = async () => {

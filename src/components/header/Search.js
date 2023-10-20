@@ -4,6 +4,7 @@ import { ReactComponent as SearchIcon } from "../../images/search.svg";
 import WheatherDataContext from "../../helpers/WheatherData";
 
 const StyledDropDown = styled.div`
+  width: 100%;
   display: none;
 `;
 
@@ -33,7 +34,7 @@ const StyledSearch = styled.form`
       background-color: ${(props) => props.theme.color.backgroundColor};
       box-shadow: 0px 2px 3px 0px #7b7980;
       box-sizing: border-box;
-      overflow: auto;
+      /* overflow: auto; */
       z-index: 10;
     }
   }
@@ -83,17 +84,18 @@ const StyledInput = styled.input`
 
 const StyledLi = styled.li`
   display: flex;
+  width: 90%;
   justify-content: center;
   align-items: center;
   text-align: center;
   color: ${(props) => props.theme.color.textMain};
   padding: 0.75rem;
   font-size: 0.8rem;
-  /* margin: 0.313rem 0.625rem; */
+  margin: 0.4rem 0.625rem;
   cursor: pointer;
   justify-content: centers;
   &:hover {
-    background-color: aquamarine;
+    background-color: #202021;
     border-radius: 1.5rem;
   }
 `;
@@ -120,9 +122,10 @@ const Search = () => {
       <StyledInput
         type="text"
         name="search"
-        id="search"
+        id="ketword"
         placeholder="Search for city in Taiwan ..."
         ref={searchRef}
+        autoComplete="on"
         // onChange={handleInputCHange}
         // value={searchInputValue}
       />
