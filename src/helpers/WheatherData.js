@@ -6,6 +6,7 @@ const WheatherDataContext = createContext(null);
 export const WheatherDataProvider = ({ children }) => {
   const api_key = "735bfb123ee3fcc4b6b6a329630e0fc4";
   // const [searchInputValue, setSearchInputValue] = useState("");//目前不需要這設定
+  const [isSearchOpen, setIsSearcgOpen] = useState(false);
   const [serchHistory, setSerchHistory] = useState([]);
   const [searchSubmitValue, setSearchSubmitValue] = useState("Taipei");
   const [locationLat, setLocationLat] = useState(25);
@@ -161,24 +162,30 @@ export const WheatherDataProvider = ({ children }) => {
   //   LocationSearch();
   // }, [searchInputValue]);
 
-  const handleClick = () => {
-    const searchText = searchRef.current.value;
-    console.log(searchText);
-    setSearchSubmitValue(searchText);
-    const updateSerchHistory = [...serchHistory, searchText];
-    localStorage.setItem("serchHistory", JSON.stringify(updateSerchHistory));
+  const handleInputFocus = () => {
+    setIsSearcgOpen(true);
   };
 
+  const handleClick = () => {
+    if (window.screen.width < 996 && isSearchOpen === false) {
+      setIsSearcgOpen(true);
+    }
+    if (isSearchOpen === true) {
+      const searchText = searchRef.current.value;
+      setSearchSubmitValue(searchText);
+      const updateSerchHistory = [...serchHistory, searchText];
+      localStorage.setItem("serchHistory", JSON.stringify(updateSerchHistory));
+    }
+  };
+
+  //serchHistory
   useEffect(() => {
     const storedHistory = JSON.parse(localStorage.getItem("serchHistory"));
     if (storedHistory) {
-      console.log("storedHistory", storedHistory);
       setSerchHistory((prevHistory) => {
-        if (prevHistory[0] === "") {
-          prevHistory.remove("");
-        }
-        const historySet = new Set(storedHistory);
-        console.log("array", Array.from(historySet));
+        console.log(prevHistory);
+        const newStoredHistory = storedHistory.filter((item) => item !== "");
+        const historySet = new Set(newStoredHistory);
         return Array.from(historySet);
       });
     }
@@ -313,6 +320,8 @@ export const WheatherDataProvider = ({ children }) => {
   return (
     <WheatherDataContext.Provider
       value={{
+        handleInputFocus,
+        isSearchOpen,
         serchHistory,
         handleHistoryClick,
         handleAutoLocation,

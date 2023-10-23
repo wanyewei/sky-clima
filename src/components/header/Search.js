@@ -78,7 +78,7 @@ const StyledInput = styled.input`
     outline: none;
   }
   @media (max-width: 996px) {
-    display: none;
+    display: ${(props) => (props.issearchOpen ? "block" : "none")};
   }
 `;
 
@@ -109,6 +109,8 @@ const Search = () => {
     handleClick,
     serchHistory,
     handleHistoryClick,
+    isSearchOpen,
+    handleInputFocus,
   } = useContext(WheatherDataContext);
 
   return (
@@ -126,12 +128,12 @@ const Search = () => {
         placeholder="Search for city in Taiwan ..."
         ref={searchRef}
         autoComplete="on"
+        onFocus={handleInputFocus}
+        issearchOpen={isSearchOpen}
         // onChange={handleInputCHange}
         // value={searchInputValue}
       />
       <StyledDropDown>
-        {console.log(serchHistory)}
-        {console.log(serchHistory.length)}
         {serchHistory.length > 0 ? (
           serchHistory.map((item, index) => {
             return (
