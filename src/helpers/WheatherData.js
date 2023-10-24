@@ -214,6 +214,7 @@ export const WheatherDataProvider = ({ children }) => {
       url: "https://google-translate1.p.rapidapi.com/language/translate/v2",
       headers: {
         "content-type": "application/x-www-form-urlencoded",
+        "Accept-Encoding": "application/gzip",
         "X-RapidAPI-Key": "e39ce1d5c9msh604a6ba4a307cc4p1259a6jsnb6911ab9e113",
         "X-RapidAPI-Host": "google-translate1.p.rapidapi.com",
       },
