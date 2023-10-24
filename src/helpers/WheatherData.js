@@ -156,17 +156,7 @@ export const WheatherDataProvider = ({ children }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     e.target.reset();
-    // console.log("提交的值", searchInputValue);
-    // console.log("handleSubmit的值 : ", e.target.value);
-    // setSearchSubmitValue(searchInputValue);
-    // console.log(searchSubmitValue);
-    // LocationSearch();
   };
-  // console.log(searchSubmitValue);
-  // console.log("提交的值", searchInputValue);
-  // useEffect(() => {
-  //   LocationSearch();
-  // }, [searchInputValue]);
 
   const handleInputFocus = () => {
     setIsInputOpen(true);
@@ -224,7 +214,6 @@ export const WheatherDataProvider = ({ children }) => {
       url: "https://google-translate1.p.rapidapi.com/language/translate/v2",
       headers: {
         "content-type": "application/x-www-form-urlencoded",
-        "Accept-Encoding": "application/gzip",
         "X-RapidAPI-Key": "e39ce1d5c9msh604a6ba4a307cc4p1259a6jsnb6911ab9e113",
         "X-RapidAPI-Host": "google-translate1.p.rapidapi.com",
       },
@@ -233,9 +222,7 @@ export const WheatherDataProvider = ({ children }) => {
 
     try {
       const response = await axios.request(options);
-      // setTranslateValue(response.data.translations[0].translatedText);
-      console.log(response.data);
-      console.log(Array.from(response.data.translations));
+      setTranslateValue(response.data.data.translations[0].translatedText);
     } catch (error) {
       console.error(error);
     }
@@ -255,7 +242,7 @@ export const WheatherDataProvider = ({ children }) => {
       setLocationLon(filterLocationSearch[0].lon);
     } catch (e) {
       console.log(e);
-      alert("請輸入台灣英文地名");
+      alert(e);
     }
   };
 
