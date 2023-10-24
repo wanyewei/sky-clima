@@ -1,18 +1,19 @@
-# Getting Started with Create React App
+#### \*Mobile
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![image](https://github.com/wanyewei/sky-clima/assets/122330163/b8191344-a947-4058-96c4-83a993ef0718)
 
-## Available Scripts
+#### \*RWD
 
-In the project directory, you can run:
+![image](https://github.com/wanyewei/sky-clima/assets/122330163/b3fd1c64-dae7-4042-88e2-031e966f235a)![image](https://github.com/wanyewei/sky-clima/assets/122330163/994b4efa-09a9-41a3-8db0-7092e78127fd)
 
-### `npm start`
+#### \* 功能
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+###### 1.基本功能
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- 使用這進入網頁時，可以先看到台北的天氣預報及空氣品質
+-
+
+###### 2.定位功能
 
 ### `npm test`
 
