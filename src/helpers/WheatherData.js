@@ -204,26 +204,26 @@ export const WheatherDataProvider = ({ children }) => {
   //API處理 Start ...
 
   const language = async () => {
-    const encodedParams = new URLSearchParams();
-    encodedParams.set("q", `${searchSubmitValue}`);
-    encodedParams.set("target", "en");
-    encodedParams.set("source", "zh");
-
     const options = {
       method: "POST",
-      url: "https://google-translate1.p.rapidapi.com/language/translate/v2",
-      headers: {
-        "content-type": "application/x-www-form-urlencoded",
-        "Accept-Encoding": "application/gzip",
-        "X-RapidAPI-Key": "e39ce1d5c9msh604a6ba4a307cc4p1259a6jsnb6911ab9e113",
-        "X-RapidAPI-Host": "google-translate1.p.rapidapi.com",
+      url: "https://microsoft-translator-text.p.rapidapi.com/translate",
+      params: {
+        "to[0]": "en",
+        "api-version": "3.0",
+        profanityAction: "NoAction",
+        textType: "plain",
       },
-      data: encodedParams,
+      headers: {
+        "content-type": "application/json",
+        "X-RapidAPI-Key": "e39ce1d5c9msh604a6ba4a307cc4p1259a6jsnb6911ab9e113",
+        "X-RapidAPI-Host": "microsoft-translator-text.p.rapidapi.com",
+      },
+      data: [{ Text: `${searchSubmitValue}` }],
     };
 
     try {
       const response = await axios.request(options);
-      setTranslateValue(response.data.data.translations[0].translatedText);
+      setTranslateValue(response.data[0].translations[0].text);
     } catch (error) {
       console.error(error);
     }
