@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { ReactComponent as SearchIcon } from "../../images/search.svg";
 import WheatherDataContext from "../../helpers/WheatherData";
@@ -78,12 +78,12 @@ const StyledInput = styled.input`
     outline: none;
   }
   @media (max-width: 996px) {
-    display: ${(props) => (props.issearchOpen ? "block" : "none")};
+    display: ${(props) => (props.isInputOpen ? "block" : "none")};
   }
 `;
 
 const StyledLi = styled.li`
-  display: flex;
+  display: ${(props) => (props.isInputOpen ? "flex" : "none")};
   width: 90%;
   justify-content: center;
   align-items: center;
@@ -109,7 +109,7 @@ const Search = () => {
     handleClick,
     serchHistory,
     handleHistoryClick,
-    isSearchOpen,
+    isInputOpen,
     handleInputFocus,
   } = useContext(WheatherDataContext);
 
@@ -129,7 +129,7 @@ const Search = () => {
         ref={searchRef}
         autoComplete="on"
         onFocus={handleInputFocus}
-        issearchOpen={isSearchOpen}
+        isInputOpen={isInputOpen}
         // onChange={handleInputCHange}
         // value={searchInputValue}
       />
@@ -138,6 +138,7 @@ const Search = () => {
           serchHistory.map((item, index) => {
             return (
               <StyledLi
+                isInputOpen={isInputOpen}
                 key={index}
                 onClick={() => {
                   handleHistoryClick(item);
@@ -148,7 +149,9 @@ const Search = () => {
             );
           })
         ) : (
-          <StyledLi>No search history available</StyledLi>
+          <StyledLi isInputOpen={isInputOpen}>
+            No search history available
+          </StyledLi>
         )}
       </StyledDropDown>
     </StyledSearch>

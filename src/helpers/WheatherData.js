@@ -5,10 +5,12 @@ const WheatherDataContext = createContext(null);
 
 export const WheatherDataProvider = ({ children }) => {
   const api_key = "735bfb123ee3fcc4b6b6a329630e0fc4";
+  const google_api_key = "AIzaSyAUpr9cu8DhGoLcmRjx_GJYllx-v7b1eM0";
   // const [searchInputValue, setSearchInputValue] = useState("");//目前不需要這設定
-  const [isSearchOpen, setIsSearcgOpen] = useState(false);
+  const [isInputOpen, setIsInputOpen] = useState(false);
   const [serchHistory, setSerchHistory] = useState([]);
   const [searchSubmitValue, setSearchSubmitValue] = useState("Taipei");
+  const [translateValue, setTranslateValue] = useState(searchSubmitValue);
   const [locationLat, setLocationLat] = useState(25);
   const [locationLon, setLocationLon] = useState(121);
   const [cityName, setCityName] = useState("台北");
@@ -41,6 +43,10 @@ export const WheatherDataProvider = ({ children }) => {
   const searchRef = useRef(null);
 
   const url = {
+    languageTranslate() {
+      return `https: //translation.googleapis.com/language/translate/v2?key=${google_api_key}`;
+    },
+
     currentWheather(lat, lon) {
       return `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${api_key}`;
     },
@@ -163,36 +169,41 @@ export const WheatherDataProvider = ({ children }) => {
   // }, [searchInputValue]);
 
   const handleInputFocus = () => {
-    setIsSearcgOpen(true);
+    setIsInputOpen(true);
   };
 
   const handleClick = () => {
-    if (window.screen.width < 996 && isSearchOpen === false) {
-      setIsSearcgOpen(true);
+    if (window.screen.width < 996 && isInputOpen === false) {
+      setIsInputOpen(true);
     }
-    if (isSearchOpen === true) {
+    if (isInputOpen === true) {
       const searchText = searchRef.current.value;
       setSearchSubmitValue(searchText);
       const updateSerchHistory = [...serchHistory, searchText];
       localStorage.setItem("serchHistory", JSON.stringify(updateSerchHistory));
+      setIsInputOpen(false);
     }
   };
 
   //serchHistory
   useEffect(() => {
-    const storedHistory = JSON.parse(localStorage.getItem("serchHistory"));
-    if (storedHistory) {
-      setSerchHistory((prevHistory) => {
-        console.log(prevHistory);
-        const newStoredHistory = storedHistory.filter((item) => item !== "");
-        const historySet = new Set(newStoredHistory);
-        return Array.from(historySet);
-      });
+    try {
+      const storedHistory = JSON.parse(localStorage.getItem("serchHistory"));
+      if (storedHistory) {
+        setSerchHistory((prevHistory) => {
+          console.log(prevHistory);
+          const newStoredHistory = storedHistory.filter((item) => item !== "");
+          const historySet = new Set(newStoredHistory);
+          return Array.from(historySet);
+        });
+      }
+    } catch (e) {
+      console.log(e);
+      alert(e);
     }
   }, [searchSubmitValue]);
 
   const handleHistoryClick = (historyItem) => {
-    console.log(historyItem);
     if (historyItem) {
       setSearchSubmitValue(historyItem);
     }
@@ -202,23 +213,64 @@ export const WheatherDataProvider = ({ children }) => {
 
   //API處理 Start ...
 
-  //尋找經緯度api
+  const language = async () => {
+    const encodedParams = new URLSearchParams();
+    encodedParams.set("q", `${searchSubmitValue}`);
+    encodedParams.set("target", "en");
+    encodedParams.set("source", "zh");
 
+    const options = {
+      method: "POST",
+      url: "https://google-translate1.p.rapidapi.com/language/translate/v2",
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+        "Accept-Encoding": "application/gzip",
+        "X-RapidAPI-Key": "e39ce1d5c9msh604a6ba4a307cc4p1259a6jsnb6911ab9e113",
+        "X-RapidAPI-Host": "google-translate1.p.rapidapi.com",
+      },
+      data: encodedParams,
+    };
+
+    try {
+      const response = await axios.request(options);
+      // setTranslateValue(response.data.translations[0].translatedText);
+      console.log(response.data);
+      console.log(Array.from(response.data.translations));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  //尋找經緯度api
   const LocationSearch = async () => {
-    // console.log("LocationSearch", searchSubmitValue);
-    const LocationResult = await axios.get(url.geo(searchSubmitValue));
-    const LocationResultDatas = LocationResult.data;
-    const filterLocationSearch = LocationResultDatas.filter((data) => {
-      return data.country === "TW";
-    });
-    setCityName(filterLocationSearch[0].local_names.zh);
-    setLocationLat(filterLocationSearch[0].lat);
-    setLocationLon(filterLocationSearch[0].lon);
+    try {
+      // console.log("LocationSearch", searchSubmitValue);
+      const LocationResult = await axios.get(url.geo(translateValue));
+      const LocationResultDatas = LocationResult.data;
+      const filterLocationSearch = LocationResultDatas.filter((data) => {
+        return data.country === "TW";
+      });
+      setCityName(filterLocationSearch[0].local_names.zh);
+      setLocationLat(filterLocationSearch[0].lat);
+      setLocationLon(filterLocationSearch[0].lon);
+    } catch (e) {
+      console.log(e);
+      alert("請輸入台灣英文地名");
+    }
   };
 
   useEffect(() => {
-    LocationSearch();
+    language();
   }, [searchSubmitValue]);
+
+  useEffect(() => {
+    try {
+      LocationSearch();
+    } catch (e) {
+      console.log(e);
+      alert(e);
+    }
+  }, [translateValue]);
 
   //開始尋找地區天氣
 
@@ -286,9 +338,14 @@ export const WheatherDataProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    WheatherSearch();
-    airPollutions();
-    locationName();
+    try {
+      WheatherSearch();
+      airPollutions();
+      locationName();
+    } catch (e) {
+      console.log(e);
+      alert(e);
+    }
   }, [locationLat, locationLon]);
 
   //自動定位按鈕觸發
@@ -321,7 +378,7 @@ export const WheatherDataProvider = ({ children }) => {
     <WheatherDataContext.Provider
       value={{
         handleInputFocus,
-        isSearchOpen,
+        isInputOpen,
         serchHistory,
         handleHistoryClick,
         handleAutoLocation,
