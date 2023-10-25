@@ -11,61 +11,49 @@
 ###### 1.基本功能
 
 - 使用這進入網頁時，可以先看到台北的天氣預報及空氣品質
--
+- 使用者輸入中文會自動在內部翻譯為英文，提高搜尋精準度
+- 當螢幕寬度小於 996px 時，使用者點擊搜尋圖示就可以展開搜尋框進行搜尋
 
 ###### 2.定位功能
 
-### `npm test`
+- 使用者點擊定位按鈕可以顯示找到目前的位置
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+###### 3.搜尋功能
 
-### `npm run build`
+- 使用者可以輸入想查看的台灣地區，將資料顯示出來
+- 使用者可以點擊搜尋框可以顯示當初的搜尋紀錄
+- 使用者點擊搜尋紀錄內的任一筆會顯示該筆紀錄的資料
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### ＊開始使用：
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+##### Clone the project:
 
-### `npm run eject`
+    git clone https://github.com/wanyewei/sky-clima.git
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+##### install:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    npm install
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+##### run the project:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    npm run start
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### 第三方 API
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- OpenWeatherMap API
+- Microsoft Translator Text API
 
-### Code Splitting
+#### ＊開發工具：
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- react @18.2.0
+- react-dom @@18.2.0
+- react-router-dom @6.16.0
+- styled-components @6.0.8
+- axios @1.5.1
+- web-vitals @2.1.4
+- jest @27.5.1
+- babel @7.22.15
