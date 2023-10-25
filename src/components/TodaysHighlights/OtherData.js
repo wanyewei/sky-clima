@@ -4,7 +4,7 @@ import { ReactComponent as HumidtyIcon } from "../../images/Humidty.svg";
 import { ReactComponent as PressureIcon } from "../../images/Pressure.svg";
 import { ReactComponent as VisibilityIcon } from "../../images/Visibility.svg";
 import { ReactComponent as FeelsLikeIcon } from "../../images/FeelsLike.svg";
-import WheatherDataContext from "../../helpers/WheatherData";
+import WeatherDataContext from "../../helpers/WeatherData";
 
 const StyledContainer = styled.div`
   flex: 0 0 100%;
@@ -89,7 +89,7 @@ const Styledpercent = styled.div`
 `;
 
 const OtherData = () => {
-  const { currentWheather } = useContext(WheatherDataContext);
+  const { currentWheather } = useContext(WeatherDataContext);
   return (
     <StyledContainer>
       <StyledDataWrapper>

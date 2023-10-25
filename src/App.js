@@ -1,17 +1,17 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Homepage from "./Homepage";
-import { WheatherDataProvider } from "./helpers/WheatherData";
+import { WeatherDataProvider } from "./helpers/WeatherData";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <WheatherDataProvider>
+      <WeatherDataProvider>
         <Routes>
           <Route path="/" exact element={<Navigate to="/home" />} />
           <Route path="/home" exact element={<Homepage />} />
         </Routes>
-      </WheatherDataProvider>
+      </WeatherDataProvider>
     </BrowserRouter>
   );
 };

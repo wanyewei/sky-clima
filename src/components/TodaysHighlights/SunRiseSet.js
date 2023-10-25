@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { ReactComponent as SunRiseIcon } from "../../images/Sunrise.svg";
 import { ReactComponent as SunSet } from "../../images/Sunset.svg";
-import WheatherDataContext from "../../helpers/WheatherData";
+import WeatherDataContext from "../../helpers/WeatherData";
 
 const StyledSunRiseSet = styled.div`
   width: 95%;
@@ -70,7 +70,7 @@ const StyledIndexTime = styled.div`
 `;
 
 const SunRiseSet = () => {
-  const { currentWheather } = useContext(WheatherDataContext);
+  const { currentWheather } = useContext(WeatherDataContext);
   return (
     <StyledSunRiseSet>
       <StyledTitle>Sunrise & Sunset</StyledTitle>

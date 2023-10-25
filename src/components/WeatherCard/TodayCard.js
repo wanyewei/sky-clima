@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { ReactComponent as SunIcon } from "../../images/sun.svg";
 import { ReactComponent as DateIcon } from "../../images/Date.svg";
 import { ReactComponent as LocationIcon } from "../../images/location.svg";
-import WheatherDataContext from "../../helpers/WheatherData";
+import WeatherDataContext from "../../helpers/WeatherData";
 
 const StyledTodayCard = styled.div`
   display: flex;
@@ -80,7 +79,7 @@ const StyledLocation = styled.div`
 `;
 
 const TodayCard = () => {
-  const { currentWheather, cityName } = useContext(WheatherDataContext);
+  const { currentWheather, cityName } = useContext(WeatherDataContext);
 
   return (
     <StyledTodayCard>

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { ReactComponent as WindIcon } from "../../images/wind.svg";
-import WheatherDataContext from "../../helpers/WheatherData";
+import WeatherDataContext from "../../helpers/WeatherData";
 
 const StyledAirQuality = styled.div`
   width: 95%;
@@ -86,7 +86,7 @@ const StyledIndexData = styled.div`
 `;
 
 const AirQuality = () => {
-  const { pollution } = useContext(WheatherDataContext);
+  const { pollution } = useContext(WeatherDataContext);
   return (
     <StyledAirQuality>
       <StyledTitle>

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import TodayCard from "../wheatherCard/TodayCard";
-import FutureCard from "../wheatherCard/FutureCard";
+import TodayCard from "../WeatherCard/TodayCard";
+import FutureCard from "../WeatherCard/FutureCard";
 
 const StyledWrapper = styled.div`
   flex: 0.5;

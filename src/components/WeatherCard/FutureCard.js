@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { ReactComponent as SumIcon } from "../../images/sun.svg";
-import WheatherDataContext from "../../helpers/WheatherData";
+import WeatherDataContext from "../../helpers/WeatherData";
 
 const StyledFutureCard = styled.div`
   width: 90%;
@@ -83,7 +83,7 @@ const StyledDay = styled.div`
 
 const FutureCard = () => {
   const { forecastDatas, weekDayNames, monthNames } =
-    useContext(WheatherDataContext);
+    useContext(WeatherDataContext);
 
   return (
     <StyledFutureCard>

@@ -2,8 +2,7 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { ReactComponent as SunIcon } from "../../images/sun.svg";
 import { ReactComponent as WindDirectionIcon } from "../../images/wind direction.svg";
-import WheatherDataContext from "../../helpers/WheatherData";
-import W04n from "../../images/wheathers/04d.png";
+import WeatherDataContext from "../../helpers/WeatherData";
 
 const StyledTodayAt = styled.div`
   flex: 0 0 100%;
@@ -151,7 +150,7 @@ const StyledCardTemperature = styled.div`
 `;
 
 const TodayAt = () => {
-  const { forecastDatas, getHours } = useContext(WheatherDataContext);
+  const { forecastDatas, getHours } = useContext(WeatherDataContext);
   return (
     <StyledTodayAt>
       <StyledTitle>Today at</StyledTitle>

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { ReactComponent as SearchIcon } from "../../images/search.svg";
-import WheatherDataContext from "../../helpers/WheatherData";
+import WeatherDataContext from "../../helpers/WeatherData";
 
 const StyledDropDown = styled.div`
   width: 100%;
@@ -34,7 +34,6 @@ const StyledSearch = styled.form`
       background-color: ${(props) => props.theme.color.backgroundColor};
       box-shadow: 0px 2px 3px 0px #7b7980;
       box-sizing: border-box;
-      /* overflow: auto; */
       z-index: 10;
     }
   }
@@ -102,8 +101,6 @@ const StyledLi = styled.li`
 
 const Search = () => {
   const {
-    // handleInputCHange,
-    // searchInputValue,
     handleSubmit,
     searchRef,
     handleClick,
@@ -111,14 +108,11 @@ const Search = () => {
     handleHistoryClick,
     isInputOpen,
     handleInputFocus,
-  } = useContext(WheatherDataContext);
+  } = useContext(WeatherDataContext);
 
   return (
     <StyledSearch onSubmit={handleSubmit}>
-      <StyledButton
-        // type="submit"
-        onClick={handleClick}
-      >
+      <StyledButton onClick={handleClick}>
         <SearchIcon />
       </StyledButton>
       <StyledInput
@@ -130,8 +124,6 @@ const Search = () => {
         autoComplete="on"
         onFocus={handleInputFocus}
         isInputOpen={isInputOpen}
-        // onChange={handleInputCHange}
-        // value={searchInputValue}
       />
       <StyledDropDown>
         {serchHistory.length > 0 ? (

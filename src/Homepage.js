@@ -32,7 +32,6 @@ const Homepage = () => {
         <DefaultLout>
           <StyledWrapper>
             <WeatherCard />
-
             <WeatherDetail />
           </StyledWrapper>
         </DefaultLout>

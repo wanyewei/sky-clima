@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { ReactComponent as LocationIcon } from "../../images/searchlocation.svg";
-import WheatherDataContext from "../../helpers/WheatherData";
+import WeatherDataContext from "../../helpers/WeatherData";
 
 const StyledWrapp = styled.div`
   display: flex;
@@ -44,7 +44,7 @@ const StyledWrapp = styled.div`
 `;
 
 const CurrentLocation = () => {
-  const { handleAutoLocation } = useContext(WheatherDataContext);
+  const { handleAutoLocation } = useContext(WeatherDataContext);
   return (
     <StyledWrapp onClick={handleAutoLocation}>
       <LocationIcon />

@@ -1,12 +1,11 @@
 import React, { createContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 
-const WheatherDataContext = createContext(null);
+const WeatherDataContext = createContext(null);
 
-export const WheatherDataProvider = ({ children }) => {
+export const WeatherDataProvider = ({ children }) => {
   const api_key = "735bfb123ee3fcc4b6b6a329630e0fc4";
   const google_api_key = "AIzaSyAUpr9cu8DhGoLcmRjx_GJYllx-v7b1eM0";
-  // const [searchInputValue, setSearchInputValue] = useState("");//目前不需要這設定
   const [isInputOpen, setIsInputOpen] = useState(false);
   const [serchHistory, setSerchHistory] = useState([]);
   const [searchSubmitValue, setSearchSubmitValue] = useState("Taipei");
@@ -147,12 +146,7 @@ export const WheatherDataProvider = ({ children }) => {
     },
   };
 
-  // Search.js搜尋 Start... 裡面放有嘗試的寫法
-  // const handleInputCHange = (e) => {
-  //   setSearchInputValue(e.target.value);
-  // };
-
-  // //Search.js搜尋 ，form表單提交內容
+  //Search.js搜尋 ，form表單提交內容
   const handleSubmit = (e) => {
     e.preventDefault();
     e.target.reset();
@@ -181,7 +175,6 @@ export const WheatherDataProvider = ({ children }) => {
       const storedHistory = JSON.parse(localStorage.getItem("serchHistory"));
       if (storedHistory) {
         setSerchHistory((prevHistory) => {
-          console.log(prevHistory);
           const newStoredHistory = storedHistory.filter((item) => item !== "");
           const historySet = new Set(newStoredHistory);
           return Array.from(historySet);
@@ -232,7 +225,6 @@ export const WheatherDataProvider = ({ children }) => {
   //尋找經緯度api
   const LocationSearch = async () => {
     try {
-      // console.log("LocationSearch", searchSubmitValue);
       const LocationResult = await axios.get(url.geo(translateValue));
       const LocationResultDatas = LocationResult.data;
       const filterLocationSearch = LocationResultDatas.filter((data) => {
@@ -274,8 +266,6 @@ export const WheatherDataProvider = ({ children }) => {
 
     const forecastData = forecastDatas.data;
 
-    console.log("天氣結果(json格式)", currentData);
-    console.log("未來天氣結果(json格式)", forecastData);
     setCurrentWheather({
       ...currentWheather,
       observationTime: getDate(currentData.dt, currentData.timezone),
@@ -339,7 +329,6 @@ export const WheatherDataProvider = ({ children }) => {
   //自動定位按鈕觸發
   const handleAutoLocation = () => {
     function successHandler(position) {
-      console.log(position);
       setLocationLat(position.coords.latitude);
       setLocationLon(position.coords.longitude);
     }
@@ -363,7 +352,7 @@ export const WheatherDataProvider = ({ children }) => {
   //API處理 End ...
 
   return (
-    <WheatherDataContext.Provider
+    <WeatherDataContext.Provider
       value={{
         handleInputFocus,
         isInputOpen,
@@ -371,8 +360,6 @@ export const WheatherDataProvider = ({ children }) => {
         handleHistoryClick,
         handleAutoLocation,
         WheatherSearch,
-        // handleInputCHange,
-        // searchInputValue,
         handleSubmit,
         searchRef,
         handleClick,
@@ -386,8 +373,8 @@ export const WheatherDataProvider = ({ children }) => {
       }}
     >
       {children}
-    </WheatherDataContext.Provider>
+    </WeatherDataContext.Provider>
   );
 };
 
-export default WheatherDataContext;
+export default WeatherDataContext;

@@ -34,6 +34,70 @@
 
 ---
 
+#### 資料夾結構
+
+sky-clima/
+├── README.md
+├── package.json
+├── public/
+│ ├── index.html
+│ ├── favicon.ico
+│ ├── manifest.json
+│ ├── robots.txt
+├── src/
+│ ├── components/
+│ │ ├── header/
+│ │ │ ├── CurrentLocation.js
+│ │ │ ├── Search.js
+│ │ ├── homepage/
+│ │ │ ├── WeatherCard.js
+│ │ │ ├── WeatherDetail.js
+│ │ ├── layout/
+│ │ │ ├── DefaultLayout.js
+│ │ │ ├── Header.js
+│ │ │ ├── SideMenus.js
+│ │ ├── TodaysHilights/
+│ │ │ ├── AirQuality.js
+│ │ │ ├── OtherData.js
+│ │ │ ├── SunRiseSet.js
+│ │ ├── WheatherCard/
+│ │ │ ├── FutureCard.js
+│ │ │ ├── TodayCard.js
+│ │ ├── WeatherDetail/
+│ │ │ ├── TodayAt.js
+│ │ │ ├── TodaysHighlights.js
+│ ├── helpers/
+│ │ ├── WeatherData.js
+│ ├── images/
+│ │ ├── Data.svg
+│ │ ├── FeelsLike.svg
+│ │ ├── Home.svg
+│ │ ├── Humidty.svg
+│ │ ├── Location.svg
+│ │ ├── Logo.svg
+│ │ ├── Pressure.svg
+│ │ ├── Search.svg
+│ │ ├── SearchLocation.svg
+│ │ ├── Sun.svg
+│ │ ├── Sunrise.svg
+│ │ ├── Sunset.svg
+│ │ ├── Visibility.svg
+│ │ ├── WindDirection.svg
+│ │ ├── Wind.svg
+│ ├── props/
+│ │ ├── Theme.js
+│ ├── App.js
+│ ├── App.test.js
+│ ├── Homepage.js
+│ ├── index.js
+│ ├── reportWebVitals.js
+│ ├── setupTest.js
+│ ├── .gitnore
+│ ├── package-lock.json
+│ ├── package.json
+│ ├── README.md
+├── node_modules/
+
 #### ＊開始使用：
 
 ##### Clone the project:
