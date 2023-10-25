@@ -36,6 +36,7 @@
 
 #### 資料夾結構
 
+```
 sky-clima/
 ├── README.md
 ├── package.json
@@ -97,6 +98,9 @@ sky-clima/
 │ ├── package.json
 │ ├── README.md
 ├── node_modules/
+```
+
+---
 
 #### ＊開始使用：
 
