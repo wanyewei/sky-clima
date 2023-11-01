@@ -174,7 +174,7 @@ export const WeatherDataProvider = ({ children }) => {
     try {
       const storedHistory = JSON.parse(localStorage.getItem("serchHistory"));
       if (storedHistory) {
-        setSerchHistory((prevHistory) => {
+        setSerchHistory(() => {
           const newStoredHistory = storedHistory.filter((item) => item !== "");
           const historySet = new Set(newStoredHistory);
           return Array.from(historySet);
@@ -230,12 +230,13 @@ export const WeatherDataProvider = ({ children }) => {
       const filterLocationSearch = LocationResultDatas.filter((data) => {
         return data.country === "TW";
       });
+      console.log(LocationResult);
       setCityName(filterLocationSearch[0].local_names.zh);
       setLocationLat(filterLocationSearch[0].lat);
       setLocationLon(filterLocationSearch[0].lon);
     } catch (e) {
       console.log(e);
-      alert(e);
+      alert(e, "請搜尋台灣地名");
     }
   };
 
