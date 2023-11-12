@@ -230,7 +230,7 @@ export const WeatherDataProvider = ({ children }) => {
       const filterLocationSearch = LocationResultDatas.filter((data) => {
         return data.country === "TW";
       });
-      console.log(LocationResult);
+      // console.log(LocationResult);
       setCityName(filterLocationSearch[0].local_names.zh);
       setLocationLat(filterLocationSearch[0].lat);
       setLocationLon(filterLocationSearch[0].lon);
