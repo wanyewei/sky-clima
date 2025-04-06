@@ -330,6 +330,7 @@ export const WeatherDataProvider = ({ children }) => {
   //自動定位按鈕觸發
   const handleAutoLocation = () => {
     function successHandler(position) {
+      console.log(position);
       setLocationLat(position.coords.latitude);
       setLocationLon(position.coords.longitude);
     }
@@ -342,7 +343,7 @@ export const WeatherDataProvider = ({ children }) => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(successHandler, errorHandler, {
         enableHighAccuracy: true,
-        timeout: 1000,
+        timeout: 10000,
         maximumAge: 0,
       });
     } else {
