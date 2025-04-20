@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { ReactComponent as SumIcon } from "../../images/sun.svg";
 import WeatherDataContext from "../../helpers/WeatherData";
 
 const StyledFutureCard = styled.div`
@@ -8,7 +7,6 @@ const StyledFutureCard = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* padding: 1rem; */
   color: ${(props) => props.theme.color.textMain};
 
   @media (max-width: 996px) {
@@ -29,7 +27,6 @@ const StyledWheatherForecst = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  /* height: 8.5rem; */
   padding: 1rem;
   border-radius: 1rem;
   background-color: ${(props) => props.theme.color.backgroundSurface};
@@ -47,6 +44,7 @@ const StyledDiv = styled.div`
   margin-top: 0.56rem;
   font-size: 0.85rem;
   font-weight: ${(props) => props.theme.typography.weightRegular};
+
   &:first-child {
     margin-top: 0;
   }
@@ -58,7 +56,7 @@ const StyledTemperature = styled.div`
   align-items: center;
   justify-content: flex-start;
 
-  svg {
+  img {
     width: 1.1875rem;
     height: 1.1875rem;
     margin-right: 0.25rem;
@@ -85,72 +83,55 @@ const FutureCard = () => {
   const { forecastDatas, weekDayNames, monthNames } =
     useContext(WeatherDataContext);
 
+  // ⏰ 取得未來 5 天中午的預報（排除今天）
+  const getMaxTempPerDay = (forecastList, count = 6) => {
+    const todayKey = new Date().toISOString().split("T")[0];
+
+    const groupedMax = forecastList.reduce((acc, item) => {
+      const date = new Date(item.dt * 1000);
+      const day = date.toISOString().split("T")[0];
+
+      if (date.getDate() === todayKey) return acc;
+
+      if (!acc[day] || item.main.temp > acc[day].main.temp) {
+        acc[day] = item; // 直接只保留最高的
+      }
+
+      return acc;
+    }, {});
+
+    return Object.values(groupedMax).slice(1, count);
+  };
+  const futureForecast = getMaxTempPerDay(forecastDatas.forecastList24);
+
   return (
     <StyledFutureCard>
       <StyledTitle>5 Days Forecast</StyledTitle>
-
       <StyledWheatherForecst>
-        {forecastDatas.forecastList24.map((data, index) => {
-          if (index % 8 === 0) {
-            let dt = new Date(data.dt_txt);
-            // console.log(timestamp);
-            const weekname = weekDayNames[dt.getUTCDay()];
-            const monthName = monthNames[dt.getUTCMonth()];
+        {futureForecast.map((data, index) => {
+          const dt = new Date(data.dt * 1000);
+          const weekname = weekDayNames[dt.getDay()];
+          const monthName = monthNames[dt.getMonth()];
 
-            return (
-              <StyledDiv key={index}>
-                <StyledTemperature>
-                  <img
-                    src={` https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
-                    width={28}
-                    height={28}
-                    loading="lazy"
-                    alt="direction"
-                  />
-                  {Math.round(data.main.temp)}°C
-                </StyledTemperature>
-                <StyledDate>
-                  {dt.getDate()}&nbsp;
-                  {monthName}
-                </StyledDate>
-                <StyledDay>{weekname}</StyledDay>
-              </StyledDiv>
-            );
-          }
+          return (
+            <StyledDiv key={index}>
+              <StyledTemperature>
+                <img
+                  src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
+                  width={28}
+                  height={28}
+                  loading="lazy"
+                  alt={data.weather[0].description}
+                />
+                {Math.round(data.main.temp)}°C
+              </StyledTemperature>
+              <StyledDate>
+                {dt.getDate()}&nbsp;{monthName}
+              </StyledDate>
+              <StyledDay>{weekname}</StyledDay>
+            </StyledDiv>
+          );
         })}
-
-        {/* <StyledDiv>
-          <StyledTemperature>
-            <SumIcon />
-            30°C
-          </StyledTemperature>
-          <StyledDate>17 Sep</StyledDate>
-          <StyledDay>Sunday</StyledDay>
-        </StyledDiv>
-        <StyledDiv>
-          <StyledTemperature>
-            <SumIcon />
-            30°C
-          </StyledTemperature>
-          <StyledDate>17 Sep</StyledDate>
-          <StyledDay>Sunday</StyledDay>
-        </StyledDiv>
-        <StyledDiv>
-          <StyledTemperature>
-            <SumIcon />
-            30°C
-          </StyledTemperature>
-          <StyledDate>17 Sep</StyledDate>
-          <StyledDay>Sunday</StyledDay>
-        </StyledDiv>
-        <StyledDiv>
-          <StyledTemperature>
-            <SumIcon />
-            30°C
-          </StyledTemperature>
-          <StyledDate>17 Sep</StyledDate>
-          <StyledDay>Sunday</StyledDay>
-        </StyledDiv> */}
       </StyledWheatherForecst>
     </StyledFutureCard>
   );

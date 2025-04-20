@@ -2,6 +2,28 @@ import React, { createContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 
 const WeatherDataContext = createContext(null);
+const taiwanCityData = {
+  台北: { en: "Taipei", lat: 25.033, lon: 121.5654 },
+  新北: { en: "New Taipei", lat: 25.0169, lon: 121.4628 },
+  桃園: { en: "Taoyuan", lat: 24.9937, lon: 121.3009 },
+  台中: { en: "Taichung", lat: 24.1477, lon: 120.6736 },
+  台南: { en: "Tainan", lat: 23.0, lon: 120.2269 },
+  高雄: { en: "Kaohsiung", lat: 22.6273, lon: 120.3014 },
+  基隆: { en: "Keelung", lat: 25.1276, lon: 121.7392 },
+  新竹: { en: "Hsinchu", lat: 24.8138, lon: 120.9675 },
+  嘉義: { en: "Chiayi", lat: 23.4801, lon: 120.4491 },
+  彰化: { en: "Changhua", lat: 24.0685, lon: 120.5624 },
+  南投: { en: "Nantou", lat: 23.913, lon: 120.685 },
+  雲林: { en: "Yunlin", lat: 23.7092, lon: 120.4313 },
+  苗栗: { en: "Miaoli", lat: 24.5602, lon: 120.8214 },
+  宜蘭: { en: "Yilan", lat: 24.7021, lon: 121.7378 },
+  花蓮: { en: "Hualien", lat: 23.9872, lon: 121.6015 },
+  台東: { en: "Taitung", lat: 22.7554, lon: 121.1443 },
+  屏東: { en: "Pingtung", lat: 22.5515, lon: 120.5487 },
+  金門: { en: "Kinmen", lat: 24.4321, lon: 118.3171 },
+  馬祖: { en: "Matsu", lat: 26.1608, lon: 119.9489 },
+  澎湖: { en: "Penghu", lat: 23.5655, lon: 119.6151 },
+};
 
 export const WeatherDataProvider = ({ children }) => {
   const api_key = "735bfb123ee3fcc4b6b6a329630e0fc4";
@@ -149,24 +171,30 @@ export const WeatherDataProvider = ({ children }) => {
   //Search.js搜尋 ，form表單提交內容
   const handleSubmit = (e) => {
     e.preventDefault();
-    e.target.reset();
+    handleSearch();
   };
-
   const handleInputFocus = () => {
     setIsInputOpen(true);
   };
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault(); // 防止表單預設行為
     if (window.screen.width < 996 && isInputOpen === false) {
       setIsInputOpen(true);
-    }
-    if (isInputOpen === true) {
-      const searchText = searchRef.current.value;
-      setSearchSubmitValue(searchText);
-      const updateSerchHistory = [...serchHistory, searchText];
-      localStorage.setItem("serchHistory", JSON.stringify(updateSerchHistory));
+    } else {
+      handleSearch();
       setIsInputOpen(false);
     }
+  };
+
+  const handleSearch = () => {
+    const searchText = searchRef.current.value?.trim();
+    if (!searchText) return;
+
+    language(searchText); // 執行查詢
+    setSearchSubmitValue(searchText); // 僅做紀錄
+    const updateSerchHistory = [...serchHistory, searchText];
+    localStorage.setItem("serchHistory", JSON.stringify(updateSerchHistory));
   };
 
   //serchHistory
@@ -188,7 +216,8 @@ export const WeatherDataProvider = ({ children }) => {
 
   const handleHistoryClick = (historyItem) => {
     if (historyItem) {
-      setSearchSubmitValue(historyItem);
+      searchRef.current.value = historyItem;
+      handleSearch();
     }
   };
 
@@ -196,62 +225,47 @@ export const WeatherDataProvider = ({ children }) => {
 
   //API處理 Start ...
 
-  const language = async () => {
-    const options = {
-      method: "POST",
-      url: "https://microsoft-translator-text.p.rapidapi.com/translate",
-      params: {
-        "to[0]": "en",
-        "api-version": "3.0",
-        profanityAction: "NoAction",
-        textType: "plain",
-      },
-      headers: {
-        "content-type": "application/json",
-        "X-RapidAPI-Key": "e39ce1d5c9msh604a6ba4a307cc4p1259a6jsnb6911ab9e113",
-        "X-RapidAPI-Host": "microsoft-translator-text.p.rapidapi.com",
-      },
-      data: [{ Text: `${searchSubmitValue}` }],
-    };
+  const language = async (serchText) => {
+    const trimmedValue = serchText.trim();
+    const cityInfo = taiwanCityData[trimmedValue];
 
-    try {
-      const response = await axios.request(options);
-      setTranslateValue(response.data[0].translations[0].text);
-    } catch (error) {
-      console.error(error);
+    if (cityInfo) {
+      console.log("✅ 對應成功：", cityInfo.en);
+      // setTranslateValue(cityInfo.en);
+      setLocationLat(cityInfo.lat);
+      setLocationLon(cityInfo.lon);
+      setCityName(trimmedValue);
+
+      await LocationSearch(cityInfo.en); // 用正確的值查，不再依賴 translateValue
+    } else {
+      // setTranslateValue(trimmedValue);
+      await LocationSearch(trimmedValue);
     }
   };
-
   //尋找經緯度api
-  const LocationSearch = async () => {
+  const LocationSearch = async (query) => {
     try {
-      const LocationResult = await axios.get(url.geo(translateValue));
+      const LocationResult = await axios.get(url.geo(query));
       const LocationResultDatas = LocationResult.data;
-      const filterLocationSearch = LocationResultDatas.filter((data) => {
-        return data.country === "TW";
-      });
-      // console.log(LocationResult);
-      setCityName(filterLocationSearch[0].local_names.zh);
-      setLocationLat(filterLocationSearch[0].lat);
-      setLocationLon(filterLocationSearch[0].lon);
+
+      const filterLocationSearch = LocationResultDatas.filter(
+        (data) => data.country === "TW"
+      );
+
+      if (filterLocationSearch.length > 0) {
+        setCityName(
+          filterLocationSearch[0].local_names?.zh || searchSubmitValue
+        );
+        setLocationLat(filterLocationSearch[0].lat);
+        setLocationLon(filterLocationSearch[0].lon);
+      } else {
+        alert("找不到台灣的對應地點，請確認輸入是否正確");
+      }
     } catch (e) {
       console.log(e);
-      alert(e, "請搜尋台灣地名");
+      alert("地理位置查詢失敗");
     }
   };
-
-  useEffect(() => {
-    language();
-  }, [searchSubmitValue]);
-
-  useEffect(() => {
-    try {
-      LocationSearch();
-    } catch (e) {
-      console.log(e);
-      alert(e);
-    }
-  }, [translateValue]);
 
   //開始尋找地區天氣
 
@@ -266,6 +280,7 @@ export const WeatherDataProvider = ({ children }) => {
     let forecastDatas = await axios.get(url.forecast(locationLat, locationLon));
 
     const forecastData = forecastDatas.data;
+    console.log(forecastData);
 
     setCurrentWheather({
       ...currentWheather,
